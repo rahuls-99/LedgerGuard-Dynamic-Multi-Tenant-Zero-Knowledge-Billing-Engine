@@ -1,2 +1,3 @@
 # LedgerGuard-Dynamic-Multi-Tenant-Zero-Knowledge-Billing-Engine
 LedgerGuard is a secure and scalable billing platform that allows multiple companies to manage their customers, subscriptions, invoices, and payments through a single system. It ensures data isolation between tenants and uses Zero-Knowledge Proofs to verify billing-related information without exposing sensitive data.
+Initial project setup. 
