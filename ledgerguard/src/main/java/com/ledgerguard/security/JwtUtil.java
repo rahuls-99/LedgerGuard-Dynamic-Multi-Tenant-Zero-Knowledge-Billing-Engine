@@ -1,8 +1,6 @@
 package com.ledgerguard.security;
 
-import com.ledgerguard.dto.AuthUserPrincipal;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,47 +9,53 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Map;
 
 @Component
 public class JwtUtil {
 
-    private final SecretKey key;
-    private final long expirationMillis;
+    @Value("${jwt.secret:LedgerGuardSuperSecretKeyForJwtSigning2026MustBeAtLeast32BytesLong!}")
+    private String secret;
 
-    public JwtUtil(
-            @Value("${app.jwt-secret:9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b}") String secret,
-            @Value("${app.jwt-expires-in-ms:86400000}") long expirationMillis
-    ) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        this.expirationMillis = expirationMillis;
+    @Value("${jwt.expiration:86400000}")
+    private long expirationMs;
+
+    private SecretKey getSigningKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String signToken(String userId, String orgId, String role) {
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expirationMillis);
-
+    public String generateToken(String userId, String orgId, String role) {
         return Jwts.builder()
                 .subject(userId)
-                .claim("userId", userId)
-                .claim("orgId", orgId)
-                .claim("role", role)
-                .issuedAt(now)
-                .expiration(expiryDate)
-                .signWith(key)
+                .claims(Map.of(
+                        "userId", userId,
+                        "orgId", orgId,
+                        "role", role
+                ))
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + expirationMs))
+                .signWith(getSigningKey())
                 .compact();
     }
 
-    public AuthUserPrincipal verifyToken(String token) throws JwtException {
-        Claims claims = Jwts.parser()
-                .verifyWith(key)
+    public Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
+    }
 
-        String userId = claims.get("userId", String.class);
-        String orgId = claims.get("orgId", String.class);
-        String role = claims.get("role", String.class);
+    public boolean validateToken(String token) {
+        try {
+            Claims claims = extractAllClaims(token);
+            return !claims.getExpiration().before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
-        return new AuthUserPrincipal(userId, orgId, role);
+    public String signToken(String userId, String orgId, String role) {
+        return generateToken(userId, orgId, role);
     }
 }
