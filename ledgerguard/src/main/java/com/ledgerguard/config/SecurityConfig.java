@@ -1,5 +1,7 @@
 package com.ledgerguard.config;
 
+import com.ledgerguard.filter.RateLimitFilter;
+import com.ledgerguard.filter.RequestLoggingFilter;
 import com.ledgerguard.security.CustomAccessDeniedHandler;
 import com.ledgerguard.security.CustomAuthenticationEntryPoint;
 import com.ledgerguard.security.JwtAuthenticationFilter;
@@ -23,14 +25,20 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    private final RequestLoggingFilter requestLoggingFilter;
     private final JwtAuthenticationFilter jwtAuthFilter;
+    private final RateLimitFilter rateLimitFilter;
     private final CustomAuthenticationEntryPoint authEntryPoint;
     private final CustomAccessDeniedHandler accessDeniedHandler;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter,
+    public SecurityConfig(RequestLoggingFilter requestLoggingFilter,
+                          JwtAuthenticationFilter jwtAuthFilter,
+                          RateLimitFilter rateLimitFilter,
                           CustomAuthenticationEntryPoint authEntryPoint,
                           CustomAccessDeniedHandler accessDeniedHandler) {
+        this.requestLoggingFilter = requestLoggingFilter;
         this.jwtAuthFilter = jwtAuthFilter;
+        this.rateLimitFilter = rateLimitFilter;
         this.authEntryPoint = authEntryPoint;
         this.accessDeniedHandler = accessDeniedHandler;
     }
@@ -49,7 +57,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/health", "/api/auth/login", "/api/real-auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(requestLoggingFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtAuthFilter, RequestLoggingFilter.class)
+                .addFilterAfter(rateLimitFilter, JwtAuthenticationFilter.class);
 
         return http.build();
     }
@@ -57,9 +67,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173", "http://100.107.61.66:5173"));
+        config.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000", "http://100.107.61.66:5173"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        config.setExposedHeaders(List.of("X-Trace-Id", "Retry-After"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

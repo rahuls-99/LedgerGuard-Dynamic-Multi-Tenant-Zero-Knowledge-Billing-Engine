@@ -1,15 +1,16 @@
 package com.ledgerguard.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ledgerguard.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.MDC;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Map;
 
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
@@ -20,14 +21,10 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException {
+        String traceId = MDC.get("traceId") != null ? MDC.get("traceId") : "no-trace";
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
-        Map<String, Object> body = Map.of(
-                "success", false,
-                "message", "Forbidden: You do not have permission to access this resource"
-        );
-
+        ErrorResponse body = ErrorResponse.of("Access denied for this role or tenant", "FORBIDDEN", traceId);
         objectMapper.writeValue(response.getOutputStream(), body);
     }
 }

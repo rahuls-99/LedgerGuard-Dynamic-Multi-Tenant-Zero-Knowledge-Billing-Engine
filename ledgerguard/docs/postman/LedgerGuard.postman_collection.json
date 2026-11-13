@@ -1,0 +1,138 @@
+{
+  "info": {
+    "_postman_id": "8e1f4a20-9c3d-4b7e-8a11-000000000002",
+    "name": "LedgerGuard API (Day 4)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login (Valid Admin - Auto Saves Token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const jsonData = pm.response.json();",
+                  "if (jsonData.token) {",
+                  "    pm.environment.set(\"token\", jsonData.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orgId\": \"{{orgId}}\",\n  \"email\": \"admin@orga.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": "{{baseUrl}}/api/real-auth/login"
+          }
+        },
+        {
+          "name": "Current User (/me)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/real-auth/me"
+          }
+        },
+        {
+          "name": "Error - Wrong Password (401)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orgId\": \"{{orgId}}\",\n  \"email\": \"admin@orga.com\",\n  \"password\": \"wrongpass\"\n}"
+            },
+            "url": "{{baseUrl}}/api/real-auth/login"
+          }
+        },
+        {
+          "name": "Error - Malformed JSON (400)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ bad-json"
+            },
+            "url": "{{baseUrl}}/api/real-auth/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Admin Ping (200 OK)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/ping"
+          }
+        },
+        {
+          "name": "Error - No Token (401)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/ping"
+          }
+        },
+        {
+          "name": "Error - Missing Route (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/admin/does-not-exist"
+          }
+        }
+      ]
+    }
+  ]
+}
