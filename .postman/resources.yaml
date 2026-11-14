@@ -2,6 +2,13 @@
 workspace:
   id: 9e75d902-a267-43b8-862a-9c5e57b0d9e3
 
+# Each entry here maps a local resource to one or more corresponding objects in Postman Cloud
+
+cloudResources:
+  collections:
+    ../postman/collections/LedgerGuard API (Day 4): bfb8525a-6653-4203-8b52-cf266a9d6baf
+    ../postman/collections/LedgerGuard - Day 5 Multi-Tenant Invoice APIs: 8030cc2f-28ea-4cf6-a2b7-640f2852ef3e
+
 # All resources in the `postman/` folder are automatically registered in Local View.
 # Point to additional files outside the `postman/` folder to register them individually. Example:
 #localResources:

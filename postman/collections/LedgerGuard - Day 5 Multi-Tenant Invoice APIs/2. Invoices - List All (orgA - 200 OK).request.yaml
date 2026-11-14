@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{base_url}}/api/invoices"
+method: GET
+headers:
+  Authorization: Bearer {{jwt_token}}
+  X-Org-Id: orgA
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+      var list = pm.response.json();
+      pm.test('Only orgA invoices returned (3 items)', function () {
+          pm.expect(list.length).to.eql(3);
+          list.forEach(inv => pm.expect(inv.orgId).to.eql('orgA'));
+      });
+    language: text/javascript
+order: 2000

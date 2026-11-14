@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{base_url}}/api/invoices/1"
+method: GET
+headers:
+  Authorization: Bearer {{jwt_token}}
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test('Status code is 200', function () { pm.response.to.have.status(200); });
+      var inv = pm.response.json();
+      pm.test('Returns Acme Corp invoice', function () {
+          pm.expect(inv.id).to.eql(1);
+          pm.expect(inv.customerName).to.eql('Acme Corp');
+      });
+    language: text/javascript
+order: 4000
