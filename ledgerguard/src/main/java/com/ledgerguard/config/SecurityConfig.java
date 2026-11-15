@@ -54,7 +54,13 @@ public class SecurityConfig {
                         .accessDeniedHandler(accessDeniedHandler)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/health", "/api/auth/login", "/api/real-auth/login").permitAll()
+                        .requestMatchers(
+                                "/api/health",
+                                "/api/v1/system/health",
+                                "/actuator/health",
+                                "/api/auth/login",
+                                "/api/real-auth/login"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(requestLoggingFilter, UsernamePasswordAuthenticationFilter.class)
@@ -69,7 +75,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000", "http://100.107.61.66:5173"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Tenant-ID", "Idempotency-Key"));
         config.setExposedHeaders(List.of("X-Trace-Id", "Retry-After"));
         config.setAllowCredentials(true);
 
