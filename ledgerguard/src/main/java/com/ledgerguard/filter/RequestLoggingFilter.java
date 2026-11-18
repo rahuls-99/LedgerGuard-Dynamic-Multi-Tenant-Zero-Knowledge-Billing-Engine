@@ -1,6 +1,6 @@
 package com.ledgerguard.filter;
 
-import com.ledgerguard.context.TenantContext;
+import com.ledgerguard.multitenancy.TenantContext;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +17,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.ledgerguard.multitenancy.TenantContext.*;
 
 @Component
 public class RequestLoggingFilter extends OncePerRequestFilter {
@@ -47,7 +49,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } finally {
             long durationMs = System.currentTimeMillis() - startTime;
-            String tenant = TenantContext.getTenantId() != null ? TenantContext.getTenantId() : "anonymous";
+            String tenant = getTenantId() != null ? getTenantId() : "anonymous";
             String userId = extractUserId();
             String clientIp = resolveClientIp(request);
 

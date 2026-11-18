@@ -3,13 +3,12 @@ package com.ledgerguard.config;
 import com.ledgerguard.entity.Invoice;
 import com.ledgerguard.repository.InvoiceRepository;
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-@Component
+// Disabled for Database-per-Tenant architecture (invoices reside in tenant databases, not master_db)
 public class DataSeeder {
 
     private final InvoiceRepository invoiceRepository;

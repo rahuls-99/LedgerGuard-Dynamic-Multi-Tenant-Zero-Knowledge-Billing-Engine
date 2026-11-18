@@ -1,6 +1,6 @@
 package com.ledgerguard.lock;
 
-import com.ledgerguard.context.TenantContext;
+import com.ledgerguard.multitenancy.TenantContext;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;

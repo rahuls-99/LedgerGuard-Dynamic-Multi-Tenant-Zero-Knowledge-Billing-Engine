@@ -23,9 +23,22 @@
 		<maven.compiler.release>17</maven.compiler.release>
 		<jjwt.version>0.12.6</jjwt.version>
 		<bucket4j.version>8.10.1</bucket4j.version>
+		<flyway.version>10.20.1</flyway.version>
 	</properties>
 
 	<dependencies>
+
+		<!-- Flyway Database Migration -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>${flyway.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+			<version>${flyway.version}</version>
+		</dependency>
 
 		<!-- Spring Data JPA (Provides jakarta.persistence.* & MySQL ORM) -->
 		<dependency>
@@ -57,23 +70,25 @@
 			<artifactId>spring-tx</artifactId>
 		</dependency>
 
-		<!-- Jackson 2 ObjectMapper (Version managed by Spring Boot) -->
+		<!-- Jackson 2 ObjectMapper -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
-		<!-- MySQL Database Driver (Version managed by Spring Boot) -->
+		<!-- MySQL Database Driver -->
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Redis -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+
 		<!-- JWT API -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -104,7 +119,7 @@
 			<version>${bucket4j.version}</version>
 		</dependency>
 
-		<!-- Lombok (Version managed by Spring Boot) -->
+		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -140,8 +155,6 @@
 
 	<build>
 		<plugins>
-
-			<!-- Spring Boot Maven Plugin -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -155,7 +168,6 @@
 				</configuration>
 			</plugin>
 
-			<!-- Java Compiler and Lombok Annotation Processing -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -169,7 +181,6 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-
 		</plugins>
 	</build>
 

@@ -1,7 +1,7 @@
 package com.ledgerguard.security;
 
-import com.ledgerguard.context.TenantContext;
 import com.ledgerguard.dto.AuthUserPrincipal;
+import com.ledgerguard.multitenancy.TenantContext;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -34,7 +34,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 || path.equals("/api/v1/system/health")
                 || path.equals("/actuator/health")
                 || path.startsWith("/api/auth/")
-                || path.startsWith("/api/real-auth/");
+                || path.startsWith("/api/real-auth/")
+                || path.startsWith("/api/admin/tenants")
+                || path.startsWith("/api/products");
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.ledgerguard.controller;
 
-import com.ledgerguard.context.TenantContext;
+import com.ledgerguard.multitenancy.TenantContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class AdminController {
 
     @GetMapping("/ping")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String, Object>> adminPing() {
+    public ResponseEntity <Object> adminPing() {
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("message", "pong (admin access verified)");

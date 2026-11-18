@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
-@Component
+//@Component
 public class LedgerDataSeeder implements CommandLineRunner {
 
     private final TransactionRepository txRepo;

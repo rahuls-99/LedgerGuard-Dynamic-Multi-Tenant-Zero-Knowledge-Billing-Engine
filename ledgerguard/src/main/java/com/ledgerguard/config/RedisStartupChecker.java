@@ -8,7 +8,7 @@ import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-@Component
+// @Component
 public class RedisStartupChecker implements ApplicationRunner {
     private static final Logger log = LoggerFactory.getLogger(RedisStartupChecker.class);
     private final StringRedisTemplate redisTemplate;

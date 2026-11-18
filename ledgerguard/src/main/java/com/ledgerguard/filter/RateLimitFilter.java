@@ -1,8 +1,8 @@
 package com.ledgerguard.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ledgerguard.context.TenantContext;
 import com.ledgerguard.dto.ErrorResponse;
+import com.ledgerguard.multitenancy.TenantContext;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.ConsumptionProbe;
@@ -10,6 +10,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -58,9 +59,9 @@ public class RateLimitFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
         boolean isLoginEndpoint = "/api/auth/login".equals(path) || "/api/real-auth/login".equals(path);
 
@@ -103,7 +104,6 @@ public class RateLimitFilter extends OncePerRequestFilter {
     }
 
     private String resolveAuthenticatedKey(HttpServletRequest request) {
-        // Key derived strictly from verified JWT SecurityContext / TenantContext — never from client headers
         String tenantId = TenantContext.getTenantId();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = null;
