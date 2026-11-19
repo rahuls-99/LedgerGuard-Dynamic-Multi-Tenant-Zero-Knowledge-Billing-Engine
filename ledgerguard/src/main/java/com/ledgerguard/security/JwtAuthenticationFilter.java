@@ -77,7 +77,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         } finally {
             TenantContext.clear();
-            SecurityContextHolder.clearContext();
         }
     }
 }

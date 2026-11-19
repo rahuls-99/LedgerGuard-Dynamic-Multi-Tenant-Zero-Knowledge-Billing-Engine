@@ -28,6 +28,7 @@ public class TenantConnectionProvider {
         String normalizedOrgId = orgId.toLowerCase().trim();
 
         // Backwards compatibility for demo orgA
+        // Backwards compatibility for demo orgA
         if ("orga".equals(normalizedOrgId) && "admin@orga.com".equalsIgnoreCase(email.trim())) {
             String hashedPassword = passwordEncoder.encode("123456");
             return Optional.of(new TenantUser("u101", "admin@orga.com", hashedPassword, "admin", "orgA"));
