@@ -57,7 +57,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     String role = claims.get("role", String.class);
 
                     if (orgId != null && userId != null && role != null) {
-                        TenantContext.setTenantId(orgId);
+                        String headerTenant = request.getHeader("X-Tenant-ID");
+                        String effectiveTenant = (headerTenant != null && !headerTenant.isBlank()) ? headerTenant.trim() : orgId;
+                        TenantContext.setTenantId(effectiveTenant);
 
                         String formattedRole = "ROLE_" + role.toUpperCase();
                         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(formattedRole);
