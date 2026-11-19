@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LedgerGuard — Tenant Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #060913;
+      --surface: #0f172a;
+      --surface-alt: #1e293b;
+      --border: rgba(148, 163, 184, 0.16);
+      --accent: #10b981;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    /* Top Navbar */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .brand { display: flex; align-items: center; gap: 0.75rem; font-weight: 700; font-size: 1.15rem; }
+    .brand i { color: var(--accent); font-size: 1.3rem; }
+    .org-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--accent); }
+    .user-actions { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--muted); }
+    .logout-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .logout-btn:hover { border-color: var(--danger); color: #fca5a5; }
+
+    /* Main Container */
+    .container { max-width: 1180px; margin: 2rem auto; padding: 0 1.5rem; }
+
+    /* Org Info Banner */
+    .org-header-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(15, 23, 42, 0.95));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .org-header-card h1 { font-size: 1.4rem; margin-bottom: 0.3rem; }
+    .org-meta { display: flex; gap: 1.25rem; flex-wrap: wrap; font-size: 0.84rem; color: var(--muted); }
+
+    /* Stat Cards Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .stat-card:hover { transform: translateY(-2px); border-color: rgba(16, 185, 129, 0.4); }
+    .stat-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; }
+    .stat-label { font-size: 0.83rem; color: var(--muted); font-weight: 500; }
+    .stat-icon {
+      width: 34px; height: 34px; border-radius: 8px;
+      display: grid; place-items: center; font-size: 0.9rem;
+    }
+    .icon-green { background: rgba(16, 185, 129, 0.14); color: var(--accent); }
+    .icon-blue { background: rgba(59, 130, 246, 0.14); color: #60a5fa; }
+    .icon-warn { background: rgba(245, 158, 11, 0.14); color: var(--warn); }
+    .icon-red { background: rgba(239, 68, 68, 0.14); color: var(--danger); }
+    .stat-value { font-size: 1.65rem; font-weight: 700; letter-spacing: -0.02em; }
+    .stat-sub { font-size: 0.76rem; color: var(--muted); margin-top: 0.35rem; }
+
+    /* Alert */
+    .error-bar {
+      display: none;
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
+      padding: 0.85rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 920px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .stats-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <i class="fa-solid fa-shield-halved"></i>
+      <span>LedgerGuard</span>
+      <span class="org-pill" id="nav-org-pill">
+        <i class="fa-solid fa-building"></i>
+        <span id="nav-org-name">Loading tenant...</span>
+        <span class="mono" id="nav-org-id">---</span>
+      </span>
+    </div>
+
+    <div class="user-actions">
+      <span id="nav-user-email">---</span>
+      <button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="error-bar" class="error-bar"></div>
+
+    <!-- Connected to /api/me -->
+    <section class="org-header-card">
+      <div>
+        <h1 id="org-title">Loading Organization...</h1>
+        <div class="org-meta">
+          <span><i class="fa-solid fa-fingerprint"></i> Tenant ID: <strong class="mono" id="meta-org-id">---</strong></span>
+          <span><i class="fa-solid fa-user-shield"></i> Role: <strong id="meta-role">---</strong></span>
+          <span><i class="fa-solid fa-lock"></i> Tier: <strong id="meta-plan">---</strong></span>
+        </div>
+      </div>
+      <div class="mono" id="trace-indicator">traceId: pending</div>
+    </section>
+
+    <!-- Stat Cards Connected to /api/invoices/stats -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-label">Total Settled Revenue</span>
+          <div class="stat-icon icon-green"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+        </div>
+        <div class="stat-value" id="stat-revenue">₹0.00</div>
+        <div class="stat-sub">Zero-knowledge verified</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-label">Total Invoices</span>
+          <div class="stat-icon icon-blue"><i class="fa-solid fa-file-invoice"></i></div>
+        </div>
+        <div class="stat-value" id="stat-total">0</div>
+        <div class="stat-sub">Scoped to current org</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-label">Pending Clearance</span>
+          <div class="stat-icon icon-warn"><i class="fa-solid fa-clock"></i></div>
+        </div>
+        <div class="stat-value" id="stat-pending">0</div>
+        <div class="stat-sub">Awaiting payment confirmation</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <span class="stat-label">Overdue Ledgers</span>
+          <div class="stat-icon icon-red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        </div>
+        <div class="stat-value" id="stat-overdue">0</div>
+        <div class="stat-sub">Requires immediate follow-up</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const API_BASE = 'http://localhost:8080';
+    const token = localStorage.getItem('ledgerguard_token');
+
+    if (!token) {
+      window.location.href = '/index.html';
+    }
+
+    function showError(msg, traceId) {
+      const bar = document.getElementById('error-bar');
+      bar.style.display = 'block';
+      bar.textContent = traceId ? `${msg} (traceId: ${traceId})` : msg;
+    }
+
+    function logout() {
+      localStorage.removeItem('ledgerguard_token');
+      localStorage.removeItem('ledgerguard_org');
+      window.location.href = '/index.html';
+    }
+
+    async function loadDashboard() {
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      try {
+        // 1. Fetch /api/me for Org & User Identity
+        const meRes = await fetch(`${API_BASE}/api/me`, { headers });
+        const traceId = meRes.headers.get('X-Trace-Id');
+        const me = await meRes.json();
+
+        if (meRes.status === 401) return logout();
+        if (!meRes.ok) return showError(me.message || 'Failed to load profile', me.traceId || traceId);
+
+        document.getElementById('nav-org-name').textContent = me.orgName;
+        document.getElementById('nav-org-id').textContent = me.orgId;
+        document.getElementById('nav-user-email').textContent = me.email;
+        document.getElementById('org-title').textContent = me.orgName;
+        document.getElementById('meta-org-id').textContent = me.orgId;
+        document.getElementById('meta-role').textContent = me.role;
+        document.getElementById('meta-plan').textContent = me.planTier;
+        if (traceId) document.getElementById('trace-indicator').textContent = `traceId: ${traceId}`;
+
+        // 2. Fetch Tenant-Scoped Stat Cards
+        const statsRes = await fetch(`${API_BASE}/api/invoices/stats`, {
+          headers: { ...headers, 'X-Org-Id': me.orgId }
+        });
+        const stats = await statsRes.json();
+
+        if (statsRes.ok) {
+          document.getElementById('stat-revenue').textContent = `₹${Number(stats.totalRevenue || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}`;
+          document.getElementById('stat-total').textContent = stats.totalInvoices ?? 0;
+          document.getElementById('stat-pending').textContent = stats.pendingInvoices ?? 0;
+          document.getElementById('stat-overdue').textContent = stats.overdueInvoices ?? 0;
+        }
+      } catch (err) {
+        showError('Cannot connect to LedgerGuard backend on port 8080.');
+      }
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>

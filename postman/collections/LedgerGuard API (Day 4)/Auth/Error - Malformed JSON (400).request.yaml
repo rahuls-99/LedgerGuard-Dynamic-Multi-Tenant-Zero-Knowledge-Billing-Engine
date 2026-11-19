@@ -1,0 +1,11 @@
+$kind: http-request
+url: "{{baseUrl}}/api/real-auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: "{ bad-json"
+auth:
+  type: noauth
+order: 4000

@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{base_url}}/api/invoices/4"
+method: GET
+headers:
+  Authorization: Bearer {{jwt_token}}
+scripts:
+  - type: afterResponse
+    code: pm.test('Cross-tenant IDOR blocked with 403', function () { pm.response.to.have.status(403); });
+    language: text/javascript
+order: 5000
