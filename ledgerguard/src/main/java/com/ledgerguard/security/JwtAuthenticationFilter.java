@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 || path.equals("/api/v1/system/health")
                 || path.equals("/actuator/health")
                 || path.startsWith("/api/auth/")
-                || path.startsWith("/api/real-auth/")
+                || path.equals("/api/real-auth/login")
                 || path.startsWith("/api/admin/tenants")
                 || path.startsWith("/api/products");
     }
