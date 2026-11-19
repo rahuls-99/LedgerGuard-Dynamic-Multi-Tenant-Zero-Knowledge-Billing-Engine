@@ -83,7 +83,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:3000", "http://100.107.61.66:5173"));
+        config.setAllowedOriginPatterns(List.of("http://localhost:*", "http://100.*:*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Tenant-ID", "Idempotency-Key"));
         config.setExposedHeaders(List.of("X-Trace-Id", "Retry-After"));
