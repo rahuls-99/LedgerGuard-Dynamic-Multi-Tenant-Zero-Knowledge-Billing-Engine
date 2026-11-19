@@ -9,7 +9,8 @@ import java.time.Instant;
         name = "ledger_entries",
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_entry_entry_id", columnNames = {"entry_id"}),
-                @UniqueConstraint(name = "uk_entry_txn_wallet_dir", columnNames = {"transaction_id", "wallet_id", "direction"})
+                @UniqueConstraint(name = "uk_entry_txn_wallet_dir", columnNames = {"transaction_id", "wallet_id", "direction"}),
+                @UniqueConstraint(name = "uk_tenant_idempotency", columnNames = {"tenant_id", "idempotency_key"})
         },
         indexes = {
                 @Index(name = "idx_entry_tenant_wallet_created", columnList = "tenant_id, wallet_id, created_at")
@@ -29,6 +30,9 @@ public class LedgerEntry {
 
     @Column(name = "transaction_id", nullable = false, updatable = false, length = 64)
     private String transactionId;
+
+    @Column(name = "idempotency_key", nullable = false, updatable = false, length = 150)
+    private String idempotencyKey;
 
     @Column(name = "wallet_id", nullable = false, updatable = false, length = 64)
     private String walletId;
@@ -62,21 +66,31 @@ public class LedgerEntry {
         throw new UnsupportedOperationException("LedgerEntry is strictly append-only; use a reversing entry instead.");
     }
 
-    // Standard Getters & Setters (setters used only before initial persist)
     public Long getId() { return id; }
+
     public String getTenantId() { return tenantId; }
     public void setTenantId(String tenantId) { this.tenantId = tenantId; }
+
     public String getEntryId() { return entryId; }
     public void setEntryId(String entryId) { this.entryId = entryId; }
+
     public String getTransactionId() { return transactionId; }
     public void setTransactionId(String transactionId) { this.transactionId = transactionId; }
+
+    public String getIdempotencyKey() { return idempotencyKey; }
+    public void setIdempotencyKey(String idempotencyKey) { this.idempotencyKey = idempotencyKey; }
+
     public String getWalletId() { return walletId; }
     public void setWalletId(String walletId) { this.walletId = walletId; }
+
     public EntryDirection getDirection() { return direction; }
     public void setDirection(EntryDirection direction) { this.direction = direction; }
+
     public BigDecimal getAmount() { return amount; }
     public void setAmount(BigDecimal amount) { this.amount = amount; }
+
     public BigDecimal getBalanceAfter() { return balanceAfter; }
     public void setBalanceAfter(BigDecimal balanceAfter) { this.balanceAfter = balanceAfter; }
+
     public Instant getCreatedAt() { return createdAt; }
 }
