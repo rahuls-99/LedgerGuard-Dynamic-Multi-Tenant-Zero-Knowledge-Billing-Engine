@@ -58,7 +58,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     if (orgId != null && userId != null && role != null) {
                         String headerTenant = request.getHeader("X-Tenant-ID");
-                        String effectiveTenant = (headerTenant != null && !headerTenant.isBlank()) ? headerTenant.trim() : orgId;
+                        String effectiveTenant;
+                        if (headerTenant != null && !headerTenant.isBlank()) {
+                            effectiveTenant = headerTenant.trim();
+                        } else if ("orgA".equalsIgnoreCase(orgId)) {
+                            effectiveTenant = "alpha";
+                        } else if ("orgB".equalsIgnoreCase(orgId)) {
+                            effectiveTenant = "beta";
+                        } else {
+                            effectiveTenant = orgId;
+                        }
                         TenantContext.setTenantId(effectiveTenant);
 
                         String formattedRole = "ROLE_" + role.toUpperCase();
