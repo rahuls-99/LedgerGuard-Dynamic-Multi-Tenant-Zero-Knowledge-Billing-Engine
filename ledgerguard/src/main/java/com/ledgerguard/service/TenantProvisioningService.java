@@ -91,6 +91,7 @@ public class TenantProvisioningService {
                 .dataSource(url, username, password)
                 .locations("classpath:db/migration/tenant")
                 .load();
+        flyway.repair();
         flyway.migrate();
     }
 }
