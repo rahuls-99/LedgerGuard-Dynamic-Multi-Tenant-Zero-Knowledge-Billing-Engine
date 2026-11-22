@@ -1,0 +1,1184 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24571 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] --------------------< com.ledgerguard:ledgerguard >---------------------
+[INFO] Building LedgerGuard 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:4.1.2:run (default-cli) > test-compile @ ledgerguard >>>
+[INFO] Loaded 24571 auto-discovered prefixes for remote repository maven-central (prefixes-maven-central.txt)
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[WARNING] Could not transfer metadata /.meta/prefixes.txt from/to flyway-community-db-support (https://maven.pkg.github.com/flyway/flyway-community-db-support): HTTP Status: 401
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ ledgerguard ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 10 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ ledgerguard ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ ledgerguard ---
+[INFO] skip non existing resourceDirectory C:\Users\ASUS\LedgerGuard-Dynamic-Multi-Tenant-Zero-Knowledge-Billing-Engine\ledgerguard\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ ledgerguard ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:4.1.2:run (default-cli) < test-compile @ ledgerguard <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:4.1.2:run (default-cli) @ ledgerguard ---
+[INFO] Loaded 50 auto-discovered prefixes for remote repository ow2-snapshot (prefixes-ow2-snapshot.txt)
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.2)
+
+2026-11-22T20:47:44.833+05:30 INFO  [main] [traceId=none] c.ledgerguard.LedgerguardApplication - Starting LedgerguardApplication using Java 17.0.12 with PID 14628 (C:\Users\ASUS\LedgerGuard-Dynamic-Multi-Tenant-Zero-Knowledge-Billing-Engine\ledgerguard\target\classes started by ASUS in C:\Users\ASUS\LedgerGuard-Dynamic-Multi-Tenant-Zero-Knowledge-Billing-Engine\ledgerguard)
+2026-11-22T20:47:44.836+05:30 INFO  [main] [traceId=none] c.ledgerguard.LedgerguardApplication - The following 1 profile is active: "demo"
+2026-11-22T20:47:45.160+05:30 INFO  [background-preinit] [traceId=none] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 9.1.5.Final
+2026-11-22T20:47:46.153+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-22T20:47:46.155+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-22T20:47:46.687+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 518 ms. Found 12 JPA repository interfaces.
+2026-11-22T20:47:46.837+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-22T20:47:46.840+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-11-22T20:47:46.892+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.ledger.repository.LedgerTransactionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.892+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.ledger.repository.WalletLedgerEntryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.893+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.ledger.repository.WalletRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.895+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.repository.AccountRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.895+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.repository.IdempotencyRecordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.897+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.repository.InvoiceRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.898+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.repository.JournalEntryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.898+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.repository.LedgerAccountRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.899+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.repository.LedgerEntryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.900+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.repository.LedgerTransactionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.900+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.repository.TenantRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.900+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ledgerguard.repository.TransactionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-11-22T20:47:46.901+05:30 INFO  [main] [traceId=none] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35 ms. Found 0 Redis repository interfaces.
+2026-11-22T20:47:48.762+05:30 INFO  [main] [traceId=none] o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-11-22T20:47:48.798+05:30 INFO  [main] [traceId=none] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-0.0.0.0-8080"]
+2026-11-22T20:47:48.806+05:30 INFO  [main] [traceId=none] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-11-22T20:47:48.806+05:30 INFO  [main] [traceId=none] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.27]
+2026-11-22T20:47:49.021+05:30 INFO  [main] [traceId=none] o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 4101 ms
+2026-11-22T20:47:49.818+05:30 INFO  [main] [traceId=none] org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-11-22T20:47:50.001+05:30 INFO  [main] [traceId=none] org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.4.13.Final
+2026-11-22T20:47:51.305+05:30 INFO  [main] [traceId=none] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-22T20:47:51.405+05:30 INFO  [main] [traceId=none] com.zaxxer.hikari.HikariDataSource - HikariPool-MASTER - Starting...
+2026-11-22T20:47:51.874+05:30 INFO  [main] [traceId=none] com.zaxxer.hikari.pool.HikariPool - HikariPool-MASTER - Added connection com.mysql.cj.jdbc.ConnectionImpl@70e54ec3
+2026-11-22T20:47:51.881+05:30 INFO  [main] [traceId=none] com.zaxxer.hikari.HikariDataSource - HikariPool-MASTER - Start completed.
+2026-11-22T20:47:52.120+05:30 INFO  [main] [traceId=none] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/master_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&connectTimeout=3000&socketTimeout=20000]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.46
+	Default catalog/schema: master_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-22T20:47:55.588+05:30 INFO  [main] [traceId=none] org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-22T20:47:55.612+05:30 INFO  [main] [traceId=none] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-22T20:47:55.805+05:30 INFO  [main] [traceId=none] o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-22T20:47:56.294+05:30 INFO  [main] [traceId=none] o.s.b.web.servlet.RegistrationBean - Filter jwtFilterRegistration was not registered (disabled)
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.company_name,
+        t1_0.db_name,
+        t1_0.db_password,
+        t1_0.db_url,
+        t1_0.db_username,
+        t1_0.status,
+        t1_0.tenant_id 
+    from
+        tenants t1_0
+2026-11-22T20:48:00.858+05:30 INFO  [main] [traceId=none] org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://localhost:3306/db_tenant_alpha?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC (MySQL 8.0)
+2026-11-22T20:48:01.020+05:30 INFO  [main] [traceId=none] o.f.c.i.s.JdbcTableSchemaHistory - Repair of failed migration in Schema History table `db_tenant_alpha`.`flyway_schema_history` not necessary. No failed migration detected.
+2026-11-22T20:48:01.077+05:30 INFO  [main] [traceId=none] o.f.core.internal.command.DbRepair - Successfully repaired schema history table `db_tenant_alpha`.`flyway_schema_history` (execution time 00:00.130s).
+2026-11-22T20:48:01.174+05:30 INFO  [main] [traceId=none] o.f.core.internal.command.DbValidate - Successfully validated 5 migrations (execution time 00:00.027s)
+2026-11-22T20:48:01.216+05:30 INFO  [main] [traceId=none] o.f.core.internal.command.DbMigrate - Current version of schema `db_tenant_alpha`: 5
+2026-11-22T20:48:01.229+05:30 INFO  [main] [traceId=none] o.f.core.internal.command.DbMigrate - Schema `db_tenant_alpha` is up to date. No migration necessary.
+2026-11-22T20:48:01.242+05:30 INFO  [main] [traceId=none] com.zaxxer.hikari.HikariDataSource - HikariPool-alpha - Starting...
+2026-11-22T20:48:01.253+05:30 INFO  [main] [traceId=none] com.zaxxer.hikari.pool.HikariPool - HikariPool-alpha - Added connection com.mysql.cj.jdbc.ConnectionImpl@179e0823
+2026-11-22T20:48:01.254+05:30 INFO  [main] [traceId=none] com.zaxxer.hikari.HikariDataSource - HikariPool-alpha - Start completed.
+2026-11-22T20:48:01.255+05:30 INFO  [main] [traceId=none] c.l.s.TenantProvisioningService - Loaded tenant datasource: alpha
+2026-11-22T20:48:01.310+05:30 INFO  [main] [traceId=none] org.flywaydb.core.FlywayExecutor - Database: jdbc:mysql://localhost:3306/db_tenant_beta?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC (MySQL 8.0)
+2026-11-22T20:48:01.358+05:30 INFO  [main] [traceId=none] o.f.c.i.s.JdbcTableSchemaHistory - Repair of failed migration in Schema History table `db_tenant_beta`.`flyway_schema_history` not necessary. No failed migration detected.
+2026-11-22T20:48:01.378+05:30 INFO  [main] [traceId=none] o.f.core.internal.command.DbRepair - Successfully repaired schema history table `db_tenant_beta`.`flyway_schema_history` (execution time 00:00.048s).
+2026-11-22T20:48:01.445+05:30 INFO  [main] [traceId=none] o.f.core.internal.command.DbValidate - Successfully validated 5 migrations (execution time 00:00.022s)
+2026-11-22T20:48:01.468+05:30 INFO  [main] [traceId=none] o.f.core.internal.command.DbMigrate - Current version of schema `db_tenant_beta`: 5
+2026-11-22T20:48:01.470+05:30 INFO  [main] [traceId=none] o.f.core.internal.command.DbMigrate - Schema `db_tenant_beta` is up to date. No migration necessary.
+2026-11-22T20:48:01.475+05:30 INFO  [main] [traceId=none] com.zaxxer.hikari.HikariDataSource - HikariPool-beta - Starting...
+2026-11-22T20:48:01.484+05:30 INFO  [main] [traceId=none] com.zaxxer.hikari.pool.HikariPool - HikariPool-beta - Added connection com.mysql.cj.jdbc.ConnectionImpl@386c6903
+2026-11-22T20:48:01.485+05:30 INFO  [main] [traceId=none] com.zaxxer.hikari.HikariDataSource - HikariPool-beta - Start completed.
+2026-11-22T20:48:01.485+05:30 INFO  [main] [traceId=none] c.l.s.TenantProvisioningService - Loaded tenant datasource: beta
+2026-11-22T20:48:01.497+05:30 WARN  [main] [traceId=none] c.ledgerguard.demo.DemoProfileGuard - 
+====================================================================
+  WARNING: LEDGERGUARD IS RUNNING IN 'DEMO' PROFILE MODE!           
+  Destructive failure/crash injection hooks are ENABLED.            
+  DO NOT USE THIS CONFIGURATION IN PRODUCTION.                      
+====================================================================
+2026-11-22T20:48:02.680+05:30 WARN  [main] [traceId=none] o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-11-22T20:48:03.053+05:30 WARN  [main] [traceId=none] o.s.b.s.a.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 444f21fd-60ba-4f35-9378-c39730985306
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-11-22T20:48:03.080+05:30 INFO  [main] [traceId=none] o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-11-22T20:48:05.412+05:30 INFO  [main] [traceId=none] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-0.0.0.0-8080"]
+2026-11-22T20:48:05.457+05:30 INFO  [main] [traceId=none] o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-11-22T20:48:05.481+05:30 INFO  [main] [traceId=none] c.ledgerguard.LedgerguardApplication - Started LedgerguardApplication in 21.574 seconds (process running for 22.206)
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.company_name,
+        t1_0.db_name,
+        t1_0.db_password,
+        t1_0.db_url,
+        t1_0.db_username,
+        t1_0.status,
+        t1_0.tenant_id 
+    from
+        tenants t1_0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+2026-11-22T20:48:05.589+05:30 INFO  [http-nio-0.0.0.0-8080-exec-1] [traceId=none] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-22T20:48:05.590+05:30 INFO  [http-nio-0.0.0.0-8080-exec-1] [traceId=none] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-11-22T20:48:05.592+05:30 INFO  [http-nio-0.0.0.0-8080-exec-1] [traceId=none] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+2026-11-22T20:48:06.463+05:30 INFO  [http-nio-0.0.0.0-8080-exec-2] [traceId=69d0f32b] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:06.464+05:30 INFO  [http-nio-0.0.0.0-8080-exec-2] [traceId=69d0f32b] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=409 durationMs=618 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@13bece7b ip=0:0:0:0:0:0:0:1
+2026-11-22T20:48:06.489+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=1
+2026-11-22T20:48:06.494+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:48:12.086+05:30 INFO  [http-nio-0.0.0.0-8080-exec-8] [traceId=55171dbb] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:12.087+05:30 INFO  [http-nio-0.0.0.0-8080-exec-8] [traceId=55171dbb] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=58 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@6ce89b04 ip=0:0:0:0:0:0:0:1
+2026-11-22T20:48:16.584+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:48:16.588+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:48:17.503+05:30 INFO  [http-nio-0.0.0.0-8080-exec-6] [traceId=1af72ff7] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:17.504+05:30 INFO  [http-nio-0.0.0.0-8080-exec-6] [traceId=1af72ff7] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=11 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@7c6a88df ip=0:0:0:0:0:0:0:1
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:48:22.856+05:30 INFO  [http-nio-0.0.0.0-8080-exec-3] [traceId=2ad3ae33] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:22.856+05:30 INFO  [http-nio-0.0.0.0-8080-exec-3] [traceId=2ad3ae33] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=14 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@486cbb2b ip=0:0:0:0:0:0:0:1
+2026-11-22T20:48:26.612+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:48:26.614+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:48:28.215+05:30 INFO  [http-nio-0.0.0.0-8080-exec-10] [traceId=eb6701ec] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:28.216+05:30 INFO  [http-nio-0.0.0.0-8080-exec-10] [traceId=eb6701ec] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=11 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@6102f29c ip=0:0:0:0:0:0:0:1
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:48:33.670+05:30 INFO  [http-nio-0.0.0.0-8080-exec-2] [traceId=25dea451] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:33.670+05:30 INFO  [http-nio-0.0.0.0-8080-exec-2] [traceId=25dea451] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=22 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@1f153e94 ip=0:0:0:0:0:0:0:1
+2026-11-22T20:48:36.629+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:48:36.631+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:48:39.156+05:30 INFO  [http-nio-0.0.0.0-8080-exec-8] [traceId=d2e3e31e] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:39.156+05:30 INFO  [http-nio-0.0.0.0-8080-exec-8] [traceId=d2e3e31e] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=19 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@1e6885df ip=0:0:0:0:0:0:0:1
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:48:44.637+05:30 INFO  [http-nio-0.0.0.0-8080-exec-6] [traceId=ace443bd] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:44.637+05:30 INFO  [http-nio-0.0.0.0-8080-exec-6] [traceId=ace443bd] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=19 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@50cb40f9 ip=0:0:0:0:0:0:0:1
+2026-11-22T20:48:46.642+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:48:46.646+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:48:50.085+05:30 INFO  [http-nio-0.0.0.0-8080-exec-3] [traceId=eae89661] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:50.086+05:30 INFO  [http-nio-0.0.0.0-8080-exec-3] [traceId=eae89661] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=15 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@1094498b ip=0:0:0:0:0:0:0:1
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:48:55.449+05:30 INFO  [http-nio-0.0.0.0-8080-exec-10] [traceId=b11d9e58] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:48:55.449+05:30 INFO  [http-nio-0.0.0.0-8080-exec-10] [traceId=b11d9e58] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=12 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@4ed7e5b8 ip=0:0:0:0:0:0:0:1
+2026-11-22T20:48:56.658+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:48:56.659+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:49:00.860+05:30 INFO  [http-nio-0.0.0.0-8080-exec-2] [traceId=45c84168] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:49:00.861+05:30 INFO  [http-nio-0.0.0.0-8080-exec-2] [traceId=45c84168] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=11 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@6c572075 ip=0:0:0:0:0:0:0:1
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.company_name,
+        t1_0.db_name,
+        t1_0.db_password,
+        t1_0.db_url,
+        t1_0.db_username,
+        t1_0.status,
+        t1_0.tenant_id 
+    from
+        tenants t1_0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:49:06.253+05:30 INFO  [http-nio-0.0.0.0-8080-exec-8] [traceId=f27f9636] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:49:06.253+05:30 INFO  [http-nio-0.0.0.0-8080-exec-8] [traceId=f27f9636] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=18 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@18376d40 ip=0:0:0:0:0:0:0:1
+2026-11-22T20:49:06.669+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:49:06.671+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:49:11.703+05:30 INFO  [http-nio-0.0.0.0-8080-exec-6] [traceId=27993429] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:49:11.703+05:30 INFO  [http-nio-0.0.0.0-8080-exec-6] [traceId=27993429] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=14 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@78353e35 ip=0:0:0:0:0:0:0:1
+2026-11-22T20:49:16.689+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:49:16.691+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:49:17.060+05:30 INFO  [http-nio-0.0.0.0-8080-exec-3] [traceId=9d75728a] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:49:17.060+05:30 INFO  [http-nio-0.0.0.0-8080-exec-3] [traceId=9d75728a] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=14 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@228f79c3 ip=0:0:0:0:0:0:0:1
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:49:22.407+05:30 INFO  [http-nio-0.0.0.0-8080-exec-10] [traceId=2d60bbe9] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:49:22.408+05:30 INFO  [http-nio-0.0.0.0-8080-exec-10] [traceId=2d60bbe9] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=12 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@68c319d1 ip=0:0:0:0:0:0:0:1
+2026-11-22T20:49:26.700+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:49:26.701+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:49:27.826+05:30 INFO  [http-nio-0.0.0.0-8080-exec-2] [traceId=0e92adea] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:49:27.826+05:30 INFO  [http-nio-0.0.0.0-8080-exec-2] [traceId=0e92adea] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=12 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@23a67adb ip=0:0:0:0:0:0:0:1
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:49:33.232+05:30 INFO  [http-nio-0.0.0.0-8080-exec-8] [traceId=41327437] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:49:33.232+05:30 INFO  [http-nio-0.0.0.0-8080-exec-8] [traceId=41327437] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=13 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@92a8fed ip=0:0:0:0:0:0:0:1
+2026-11-22T20:49:36.718+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:49:36.720+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:49:38.652+05:30 INFO  [http-nio-0.0.0.0-8080-exec-6] [traceId=90da96e6] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:49:38.653+05:30 INFO  [http-nio-0.0.0.0-8080-exec-6] [traceId=90da96e6] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=16 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@2896b11 ip=0:0:0:0:0:0:0:1
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.idempotency_key=?
+Hibernate: 
+    select
+        w1_0.id,
+        w1_0.balance,
+        w1_0.currency,
+        w1_0.owner_id,
+        w1_0.is_system,
+        w1_0.updated_at 
+    from
+        billing_wallets w1_0 
+    where
+        w1_0.id=?
+2026-11-22T20:49:44.154+05:30 INFO  [http-nio-0.0.0.0-8080-exec-3] [traceId=c90bb148] c.l.multitenancy.TenantFilter - Clearing tenant context for: alpha
+2026-11-22T20:49:44.155+05:30 INFO  [http-nio-0.0.0.0-8080-exec-3] [traceId=c90bb148] c.l.filter.RequestLoggingFilter - method=POST path=/api/v1/ledger/post status=422 durationMs=27 tenant=anonymous userId=com.ledgerguard.dto.AuthUserPrincipal@48a492a8 ip=0:0:0:0:0:0:0:1
+2026-11-22T20:49:46.773+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:49:46.783+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:49:56.804+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:49:56.811+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.company_name,
+        t1_0.db_name,
+        t1_0.db_password,
+        t1_0.db_url,
+        t1_0.db_username,
+        t1_0.status,
+        t1_0.tenant_id 
+    from
+        tenants t1_0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+2026-11-22T20:50:06.824+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:50:06.831+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:50:16.855+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:50:16.862+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:50:26.888+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:50:26.890+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:50:36.919+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:50:36.923+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:50:46.963+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:50:46.966+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:50:56.996+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:50:57.001+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.company_name,
+        t1_0.db_name,
+        t1_0.db_password,
+        t1_0.db_url,
+        t1_0.db_username,
+        t1_0.status,
+        t1_0.tenant_id 
+    from
+        tenants t1_0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+2026-11-22T20:51:07.020+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:51:07.024+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:51:17.039+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:51:17.044+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:51:27.059+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:51:27.063+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:51:37.083+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:51:37.087+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:51:47.115+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:51:47.121+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:51:57.140+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:51:57.143+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.company_name,
+        t1_0.db_name,
+        t1_0.db_password,
+        t1_0.db_url,
+        t1_0.db_username,
+        t1_0.status,
+        t1_0.tenant_id 
+    from
+        tenants t1_0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+2026-11-22T20:52:07.166+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:52:07.171+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:52:17.195+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:52:17.199+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:52:27.221+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:52:27.223+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:52:37.254+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:52:37.264+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:52:47.380+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:52:47.393+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:52:57.461+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:52:57.467+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.company_name,
+        t1_0.db_name,
+        t1_0.db_password,
+        t1_0.db_url,
+        t1_0.db_username,
+        t1_0.status,
+        t1_0.tenant_id 
+    from
+        tenants t1_0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+2026-11-22T20:53:07.487+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:53:07.489+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:53:17.502+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:53:17.503+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:53:27.532+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:53:27.538+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:53:37.564+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:53:37.570+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:53:47.589+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:53:47.592+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:53:57.609+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:53:57.612+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+Hibernate: 
+    select
+        t1_0.id,
+        t1_0.company_name,
+        t1_0.db_name,
+        t1_0.db_password,
+        t1_0.db_url,
+        t1_0.db_username,
+        t1_0.status,
+        t1_0.tenant_id 
+    from
+        tenants t1_0
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+Hibernate: 
+    select
+        lt1_0.id,
+        lt1_0.amount,
+        lt1_0.created_at,
+        lt1_0.currency,
+        lt1_0.failure_reason,
+        lt1_0.idempotency_key,
+        lt1_0.request_hash,
+        lt1_0.status,
+        lt1_0.transaction_id,
+        lt1_0.type,
+        lt1_0.updated_at,
+        lt1_0.wallet_id 
+    from
+        billing_transactions lt1_0 
+    where
+        lt1_0.status='PENDING' 
+        and lt1_0.created_at<?
+2026-11-22T20:54:07.634+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:54:07.636+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:54:17.650+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:54:17.652+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:54:27.663+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:54:27.665+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:54:37.681+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=alpha recovered=0
+2026-11-22T20:54:37.684+05:30 INFO  [scheduling-1] [traceId=none] c.l.l.state.PendingTransactionReaper - Reaper tenant=beta recovered=0
+2026-11-22T20:54:40.663+05:30 INFO  [SpringApplicationShutdownHook] [traceId=none] o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-22T20:54:40.808+05:30 INFO  [tomcat-shutdown] [traceId=none] o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-11-22T20:54:40.983+05:30 INFO  [SpringApplicationShutdownHook] [traceId=none] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO] ------------------------------------------------------------------------
+[ERROR] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  07:17 min
+[INFO] Finished at: 2026-11-22T20:54:41+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:4.1.2:run (default-cli) on project ledgerguard: Process terminated with exit code: 1 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
