@@ -1,0 +1,10 @@
+# LedgerGuard E2E Test Data & Reset Guide
+
+## Reset Script & Seeded Wallets
+
+Run `scripts/reset-e2e-data.sh` with password environment variables set (`E2E_ADMIN_ORGA_PASS`, `E2E_MEMBER_ORGA_PASS`, `E2E_ADMIN_ORGB_PASS`, `E2E_MEMBER_ORGB_PASS`):
+
+- **orgA (`db_tenant_alpha`):** `W-A-1001` through `W-A-1010` (`1000.00 INR` each), `W-A-LOW` (`50.00 INR`), `W-A-HIST` (57 historical transactions across `SUCCESS`, `FAILED`, and `ROLLED_BACK`), plus system revenue wallet `W-A-SYS-REV`.
+- **orgB (`db_tenant_beta`):** `W-B-1001` through `W-B-1010` (`1000.00 INR` each), `W-B-LOW` (`50.00 INR`), `W-B-HIST` (57 historical transactions), plus system revenue wallet `W-B-SYS-REV`.
+- **Users:** `admin@orga.com`, `member@orga.com`, `admin@orgb.com`, `member@orgb.com`.
+- **Spring Profile:** Activate `e2e` (`--spring.profiles.active=e2e`) for higher test login rate limits.

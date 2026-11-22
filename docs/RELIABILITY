@@ -1,0 +1,22 @@
+# LedgerGuard Reliability, Timeouts & Retry Policy
+
+## Timeout & Pool Configuration
+
+| Layer / Component | Parameter / Budget | Configured Value | Behavior on Timeout / Exhaustion |
+| --- | --- | --- | --- |
+| JDBC Driver | `connectTimeout` / `socketTimeout` | `3000 ms` / `20000 ms` | Socket timeout exceeds 5 s DB transaction timeout so SQL timeout surfaces cleanly |
+| HikariCP (Master & Tenant Pools) | `connection-timeout` / `maximum-pool-size` / `max-lifetime` | `3000 ms` / `10` / `240000 ms` | Returns `503 SERVICE_UNAVAILABLE` and discards any `PENDING` row |
+| MySQL Engine | `innodb_lock_wait_timeout` | `5 s` | Aborts blocked row-lock wait before socket timeout |
+| Redis | `spring.data.redis.timeout` | `2000 ms` | Returns `503 SERVICE_UNAVAILABLE` and discards any `PENDING` row |
+| Request Budget (Pre-Wallet Lock) | `requireAtLeast(19s)` from `25s` total | `>= 19000 ms` left | Releases lock if held, calls `discardPending`, returns `503 REQUEST_TIMEOUT` with `Retry-After: 1` |
+| Request Budget (Post-Wallet Lock) | `requireAtLeast(16s)` from `25s` total | `>= 16000 ms` left | Releases wallet lock, calls `discardPending`, returns `503 REQUEST_TIMEOUT` with `Retry-After: 1` |
+| Stuck-PENDING Reaper | `@Scheduled(fixedDelay = 60_000)` + Redis lock `55s` | Age `> 2 min`, no `ledger_entries` | Marks `ROLLED_BACK` (`STUCK_PENDING_RECOVERED`); alerts at `ERROR` if entries exist |
+
+## Retry & Idempotency Rules
+
+| Scenario | Client Action | Expected Server Response |
+| --- | --- | --- |
+| Same `Idempotency-Key` + identical normalized payload | Safe to retry | Stored outcome replayed with `Idempotent-Replayed: true`; no duplicate ledger posting |
+| Same `Idempotency-Key` + different amount, wallet, or type | Do not replay as same operation; use a new key | `422 IDEMPOTENCY_KEY_REUSED`; no balance or ledger change |
+| Prior outcome was `FAILED` (`422`) or `ROLLED_BACK` (`500`) | Safe to retry with same key to read stored result | Returns stored outcome (`422` / `500`) without re-executing posting |
+| `503 REQUEST_TIMEOUT` (`Retry-After: 1`) or `503 SERVICE_UNAVAILABLE` | Back off and retry after `Retry-After` using same `Idempotency-Key` | Processes once when backing dependency recovers |

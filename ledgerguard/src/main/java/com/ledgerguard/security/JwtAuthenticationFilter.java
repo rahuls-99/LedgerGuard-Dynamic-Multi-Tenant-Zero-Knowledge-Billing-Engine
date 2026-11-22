@@ -1,0 +1,93 @@
+package com.ledgerguard.security;
+
+import com.ledgerguard.dto.AuthUserPrincipal;
+import com.ledgerguard.multitenancy.TenantContext;
+import io.jsonwebtoken.Claims;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.util.List;
+
+@Component
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private final JwtUtil jwtUtil;
+
+    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.equals("/api/health")
+                || path.equals("/api/v1/system/health")
+                || path.equals("/actuator/health")
+                || path.startsWith("/api/auth/")
+                || path.equals("/api/real-auth/login")
+                || path.startsWith("/api/admin/tenants")
+                || path.startsWith("/api/products");
+    }
+
+    @Override
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+        try {
+            String authHeader = request.getHeader("Authorization");
+
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                String token = authHeader.substring(7);
+
+                if (jwtUtil.validateToken(token)) {
+                    Claims claims = jwtUtil.extractAllClaims(token);
+
+                    String userId = claims.get("userId", String.class);
+                    String orgId = claims.get("orgId", String.class);
+                    String role = claims.get("role", String.class);
+
+                    if (orgId != null && userId != null && role != null) {
+                        String headerTenant = request.getHeader("X-Tenant-ID");
+                        String effectiveTenant;
+                        if (headerTenant != null && !headerTenant.isBlank()) {
+                            effectiveTenant = headerTenant.trim();
+                        } else if ("orgA".equalsIgnoreCase(orgId)) {
+                            effectiveTenant = "alpha";
+                        } else if ("orgB".equalsIgnoreCase(orgId)) {
+                            effectiveTenant = "beta";
+                        } else {
+                            effectiveTenant = orgId;
+                        }
+                        TenantContext.setTenantId(effectiveTenant);
+
+                        String formattedRole = "ROLE_" + role.toUpperCase();
+                        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(formattedRole);
+
+                        AuthUserPrincipal principal = new AuthUserPrincipal(userId, orgId, role);
+
+                        UsernamePasswordAuthenticationToken authentication =
+                                new UsernamePasswordAuthenticationToken(principal, null, List.of(authority));
+                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+                }
+            }
+
+            filterChain.doFilter(request, response);
+
+        } finally {
+            TenantContext.clear();
+        }
+    }
+}
