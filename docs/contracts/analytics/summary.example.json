@@ -1,0 +1,13 @@
+{
+  "tenantId": "orgA",
+  "from": "2026-10-22",
+  "to": "2026-11-20",
+  "currency": "INR",
+  "totalSpend": "12450.50",
+  "totalQuantity": "184200.0000",
+  "point": {
+    "label": "30d",
+    "spend": "12450.50",
+    "quantity": "184200.0000"
+  }
+}
