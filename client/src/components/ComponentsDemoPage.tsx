@@ -659,7 +659,7 @@ export const ComponentsDemoPage: React.FC<ComponentsDemoPageProps> = ({
                 </button>
             </Modal>
 
-            {/* TOAST */}
+            {/* EXISTING TOAST */}
             <Card title="Toast Notifications">
                 <p>Click the button to preview a toast notification.</p>
 
@@ -678,6 +678,112 @@ export const ComponentsDemoPage: React.FC<ComponentsDemoPageProps> = ({
                     onClose={() => setShowToast(false)}
                 />
             )}
+
+            {/* DAY 11: NEW TOAST NOTIFICATION VARIANTS */}
+            <Card title="Day 11: Toast Notification Variants">
+                <p>Click each button to preview different notification types.</p>
+
+                <div
+                    style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '10px',
+                    }}
+                >
+                    <button
+                        type="button"
+                        onClick={() =>
+                            toast.success({
+                                title: 'Payment Successful',
+                                message: 'Your payment was completed successfully.',
+                            })
+                        }
+                    >
+                        Success Toast
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() =>
+                            toast.error({
+                                title: 'Payment Failed',
+                                message: 'The payment could not be processed.',
+                                traceId: 'LG-PAY-1001',
+                            })
+                        }
+                    >
+                        Error Toast
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() =>
+                            toast.rollback({
+                                title: 'Transaction Rolled Back',
+                                message: 'The transaction has been reversed.',
+                            })
+                        }
+                    >
+                        Rollback Toast
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() =>
+                            toast.warning({
+                                title: 'Action Required',
+                                message: 'Please verify the billing information.',
+                            })
+                        }
+                    >
+                        Warning Toast
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() =>
+                            toast.info({
+                                title: 'Information',
+                                message: 'Your billing records are up to date.',
+                            })
+                        }
+                    >
+                        Info Toast
+                    </button>
+                </div>
+            </Card>
+
+            {/* DAY 11: TRANSACTION RESULT CARDS */}
+            <Card title="Day 11: Transaction Result Cards">
+                <TransactionResultCard
+                    variant="success"
+                    title="Payment Successful"
+                    message="Your payment has been completed successfully."
+                    details={[
+                        { label: 'Transaction ID', value: 'TXN-1001' },
+                        { label: 'Amount', value: '$250.00' },
+                    ]}
+                    note="Your invoice has been updated."
+                />
+
+                <TransactionResultCard
+                    variant="failed"
+                    title="Payment Failed"
+                    message="We could not process your payment."
+                    traceId="TRACE-2001"
+                    note="Please check your payment details and try again."
+                />
+
+                <TransactionResultCard
+                    variant="rolledBack"
+                    title="Transaction Rolled Back"
+                    message="The transaction was reversed successfully."
+                    details={[
+                        { label: 'Transaction ID', value: 'TXN-3001' },
+                        { label: 'Reason', value: 'Payment verification failed' },
+                    ]}
+                />
+            </Card>
         </section>
     );
 };

@@ -52,14 +52,14 @@ export function App(): React.ReactElement {
   }
 
   return (
-    <main>
-      {isLoggedIn ? (
-        <ComponentsDemoPage onLogout={handleLogout} />
-      ) : (
-        <Login onLoginSuccess={handleLoginSuccess} />
-      )}
-    </main>
-  );
+  <main>
+    {isLoggedIn ? (
+      <ComponentsDemoPage onLogout={handleLogout} />
+    ) : (
+      <Login onLoginSuccess={handleLoginSuccess} />
+    )}
+  </main>
+);
 }
 
 export default App;

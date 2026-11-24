@@ -22,12 +22,9 @@ export default function Toast({
 }: ToastProps): React.ReactElement {
   const [paused, setPaused] = useState(false);
   const [remaining, setRemaining] = useState(toast.duration);
+
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startedAtRef = useRef<number>(0);
-
-  useEffect(() => {
-    setRemaining(toast.duration);
-  }, [toast.id, toast.duration]);
 
   useEffect(() => {
     if (remaining <= 0 || paused || toast.duration === 0) {
