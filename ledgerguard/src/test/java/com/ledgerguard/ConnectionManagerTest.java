@@ -34,7 +34,7 @@ class ConnectionManagerTest {
         try (Connection connection = dataSource.getConnection()) {
             assertNotNull(connection);
             assertTrue(connection.isValid(2), "MySQL connection must be valid");
-            assertEquals("ledgerguard", connection.getCatalog());
+            assertEquals("master_db", connection.getCatalog());
         }
     }
 
