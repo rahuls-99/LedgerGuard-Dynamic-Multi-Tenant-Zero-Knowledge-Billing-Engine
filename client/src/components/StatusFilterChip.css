@@ -1,0 +1,44 @@
+.status-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm, 8px);
+    padding: 8px 14px;
+    border: 1px solid var(--border-color, #d1d5db);
+    border-radius: 9999px;
+    background-color: var(--surface, #ffffff);
+    color: var(--text-primary, #1f2937);
+    font-family: var(--sans, Arial, sans-serif);
+    font-size: var(--font-size-sm, 14px);
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.status-filter-chip:hover {
+    border-color: var(--text-secondary, #4b5563);
+}
+
+.status-filter-chip--selected {
+    background-color: var(--primary-color, #1d4ed8);
+    color: #ffffff;
+    border-color: var(--primary-color, #1d4ed8);
+}
+
+.status-filter-chip__count {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-filter-chip:focus-visible {
+    outline: 2px solid var(--primary-color, #1d4ed8);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .status-filter-chip {
+        transition: none;
+    }
+}

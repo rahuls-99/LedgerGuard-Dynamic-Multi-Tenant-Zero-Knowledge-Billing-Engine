@@ -1,0 +1,63 @@
+
+.amount-input {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+.amount-input__wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--surface);
+}
+
+.amount-input__currency {
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.amount-input__field {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-size: 16px;
+}
+
+.amount-input__field:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.amount-input__wrapper:focus-within {
+    border-color: var(--color-primary, #2563eb);
+    box-shadow: 0 0 0 2px rgb(37 99 235 / 15%);
+}
+
+.amount-input__field[aria-invalid="true"] {
+    border-color: #dc2626;
+}
+
+.amount-input__preview {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.amount-input__error {
+    margin: 0;
+    color: #dc2626;
+    font-size: var(--font-size-sm);
+}
