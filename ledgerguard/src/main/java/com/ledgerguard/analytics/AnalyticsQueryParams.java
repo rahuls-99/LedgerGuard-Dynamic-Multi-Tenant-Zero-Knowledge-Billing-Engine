@@ -1,4 +1,4 @@
-package com.ledgerguard.analytics.api;
+package com.ledgerguard.analytics;
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
