@@ -1,0 +1,5 @@
+$kind: http-request
+name: Current User (/me)
+url: "{{baseUrl}}/api/real-auth/me"
+method: GET
+order: 2000

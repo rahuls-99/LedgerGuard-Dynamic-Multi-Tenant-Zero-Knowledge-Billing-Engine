@@ -4,11 +4,12 @@ node_modules/
 # Build output
 dist/
 build/
+target/
 
 # Environment variables
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
 # Logs
 *.log
@@ -18,7 +19,9 @@ npm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 .idea/
+*.iml
 
-# OS files
+# OS / Local artifacts
 .DS_Store
 Thumbs.db
+dump.rdb

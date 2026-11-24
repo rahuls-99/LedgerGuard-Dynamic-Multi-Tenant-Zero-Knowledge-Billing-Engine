@@ -1,0 +1,11 @@
+CREATE TABLE tenants (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    tenant_id VARCHAR(50) NOT NULL UNIQUE,
+    company_name VARCHAR(100) NOT NULL,
+    db_name VARCHAR(100) NOT NULL UNIQUE,
+    db_url VARCHAR(255) NOT NULL,
+    db_username VARCHAR(100) NOT NULL,
+    db_password VARCHAR(100) NOT NULL,
+    status VARCHAR(20) DEFAULT 'ACTIVE',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS idempotency_records (id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, organization_id VARCHAR(255) NOT NULL, idempotency_key VARCHAR(128) NOT NULL, transaction_id VARCHAR(255) NOT NULL UNIQUE, response_payload TEXT NOT NULL, http_status INT NOT NULL, created_at DATETIME(6) NOT NULL, UNIQUE KEY uk_org_idempotency_key (organization_id, idempotency_key));
+
+CREATE TABLE IF NOT EXISTS ledger_transactions (id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, transaction_id VARCHAR(255) NOT NULL UNIQUE, organization_id VARCHAR(255) NOT NULL, amount DECIMAL(19,4) NOT NULL, currency VARCHAR(10) NOT NULL, reference_id VARCHAR(255) NOT NULL, status VARCHAR(32) NOT NULL, created_at DATETIME(6) NOT NULL);
