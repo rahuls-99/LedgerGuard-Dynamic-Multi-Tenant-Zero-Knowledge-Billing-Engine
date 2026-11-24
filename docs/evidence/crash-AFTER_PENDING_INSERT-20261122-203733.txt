@@ -1,0 +1,52 @@
+============================================================
+CRASH SIMULATION EVIDENCE: AFTER_PENDING_INSERT
+Timestamp: 2026-11-22T20:37:33+05:30
+============================================================
+[STEP 2] Starting balance of w-crash-1795360053:
+id	balance	currency
+w-crash-1795360053	1000.00	INR
+Armed one-shot failure hook: AFTER_PENDING_INSERT:CRASH ->/c/Users/ASUS/LedgerGuard-Dynamic-Multi-Tenant-Zero-Knowledge-Billing-Engine/ledgerguard/.demo/failure
+[STEP 4] Sending charge of 250.00 with key=crash-demo-key-AFTER_PENDING_INSERT-001 (expecting JVM halt 137)...
+{"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":false}
+HTTP_CODE:200
+CURL_EXIT:0
+[STEP 5] MySQL state immediately after crash:
+transaction_id	status	amount	created_at
+TXN-d98a94ec3154	SUCCESS	250.00	2026-11-22 15:08:03.433
+id	balance
+w-crash-1795360053	750.00
+entry_count
+1
+[STEP 6] Restarting backend in demo profile...
+[STEP 7] Polling retry with same key (crash-demo-key-AFTER_PENDING_INSERT-001) every 5s for 90s:
+[t+0s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+5s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+10s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+15s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+20s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+25s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+30s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+35s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+40s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+45s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+50s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+55s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+60s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+65s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+70s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+75s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+80s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+85s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[t+90s] HTTP/1.1 200  |  | {"transactionId":"TXN-d98a94ec3154","status":"SUCCESS","failureCode":null,"balanceAfter":750.00,"idempotentReplay":true}
+[STEP 8] Final DB state & Invariants after recovery:
+transaction_id	status	amount	failure_reason
+TXN-d98a94ec3154	SUCCESS	250.00	NULL
+id	balance
+w-crash-1795360053	750.00
+--- SQL INVARIANTS CHECK (db_tenant_alpha) ---
+chk	violations
+1_UNBALANCED_TX	0
+chk	violations
+2_NEGATIVE_BAL	0
+chk	violations
+3_ORPHAN_ENTRIES	0

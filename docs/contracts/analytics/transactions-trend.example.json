@@ -1,0 +1,18 @@
+{
+  "tenantId": "orgA",
+  "granularity": "day",
+  "buckets": [
+    {
+      "bucket": "2026-11-20",
+      "successCount": 18,
+      "failedCount": 2,
+      "rolledBackCount": 1,
+      "chargedAmount": "3450.00",
+      "point": {
+        "date": "2026-11-20",
+        "amount": "3450.00",
+        "quantity": "21.0000"
+      }
+    }
+  ]
+}

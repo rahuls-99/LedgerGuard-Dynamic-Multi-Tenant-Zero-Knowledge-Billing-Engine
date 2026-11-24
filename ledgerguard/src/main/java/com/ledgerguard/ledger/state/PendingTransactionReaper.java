@@ -20,8 +20,8 @@ public class PendingTransactionReaper {
     public static final String REAPER_LOCK_KEY = "lg:system:lock:reaper";
     public static final Duration REAPER_LOCK_TTL = Duration.ofSeconds(55);
     private static final Logger log = LoggerFactory.getLogger(PendingTransactionReaper.class);
-    private static final String RECOVER_SQL = "UPDATE transactions t SET t.status = 'ROLLED_BACK', t.failure_reason = 'STUCK_PENDING_RECOVERED' WHERE t.status = 'PENDING' AND t.created_at < NOW(3) - INTERVAL 2 MINUTE AND NOT EXISTS (SELECT 1 FROM ledger_entries le WHERE le.transaction_id = t.transaction_id)";
-    private static final String FIND_ORPHAN_SQL = "SELECT t.transaction_id FROM transactions t WHERE t.status = 'PENDING' AND t.created_at < NOW(3) - INTERVAL 2 MINUTE AND EXISTS (SELECT 1 FROM ledger_entries le WHERE le.transaction_id = t.transaction_id)";
+    private static final String RECOVER_SQL = "UPDATE billing_transactions t SET t.status = 'ROLLED_BACK', t.failure_reason = 'STUCK_PENDING_RECOVERED' WHERE t.status = 'PENDING' AND t.created_at < NOW(3) - INTERVAL 45 SECOND AND NOT EXISTS (SELECT 1 FROM billing_ledger_entries le WHERE le.transaction_id = t.transaction_id)";
+    private static final String FIND_ORPHAN_SQL = "SELECT t.transaction_id FROM billing_transactions t WHERE t.status = 'PENDING' AND t.created_at < NOW(3) - INTERVAL 45 SECOND AND EXISTS (SELECT 1 FROM billing_ledger_entries le WHERE le.transaction_id = t.transaction_id)";
     private final LockService lockService;
     private final Supplier<List<String>> activeTenantsSupplier;
     private final JdbcTemplate jdbcTemplate;
@@ -31,7 +31,7 @@ public class PendingTransactionReaper {
         this.activeTenantsSupplier = activeTenantsSupplier;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-    @Scheduled(fixedDelay = 60_000)
+    @Scheduled(fixedDelayString = "${ledgerguard.reaper.fixed-delay-ms:10000}")
     public void reapStuckPendingTransactions() {
         Optional<LockHandle> lockOpt = lockService.tryAcquire(REAPER_LOCK_KEY, REAPER_LOCK_TTL, Duration.ZERO);
         if (lockOpt.isEmpty()) return;

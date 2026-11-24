@@ -1,0 +1,17 @@
+{
+  "tenantId": "orgA",
+  "granularity": "day",
+  "series": [
+    {
+      "bucket": "2026-11-20",
+      "resourceCode": "API_CALLS",
+      "quantity": "4200.0000",
+      "amount": "1.68",
+      "point": {
+        "date": "2026-11-20",
+        "quantity": "4200.0000",
+        "amount": "1.68"
+      }
+    }
+  ]
+}
