@@ -16,7 +16,7 @@ export default function DashboardPage() {
       <header className="dashboard-header">
         <h1>LedgerGuard</h1>
 
-        <button onClick={handleLogout}>
+        <button type="button" onClick={handleLogout}>
           Logout
         </button>
       </header>
@@ -32,7 +32,10 @@ export default function DashboardPage() {
           </div>
         )}
 
-        <nav className="dashboard-navigation">
+        <nav
+          className="dashboard-navigation"
+          aria-label="Dashboard navigation"
+        >
           <Link to="/ledger">Ledger</Link>
           <Link to="/analytics">Analytics</Link>
         </nav>

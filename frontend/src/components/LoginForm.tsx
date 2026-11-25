@@ -32,7 +32,7 @@ export default function LoginForm({
     const cleanEmail = email.trim();
 
     if (!cleanOrgId || !cleanEmail || !password) {
-      setValidationError("Please fill in all fields.");
+      setValidationError("Please fill in all required fields.");
       return;
     }
 
@@ -50,41 +50,87 @@ export default function LoginForm({
     }
   };
 
-  return (
-    <form className="login-form" onSubmit={handleSubmit}>
-      <h2>LedgerGuard Login</h2>
+  const displayedError = validationError || error;
 
-      <label htmlFor="orgId">Organization ID</label>
+  return (
+    <form
+      className="login-form"
+      onSubmit={handleSubmit}
+      aria-busy={loading}
+    >
+      <h1>LedgerGuard Login</h1>
+
+      <p>Fields marked with * are required.</p>
+
+      <label htmlFor="orgId">
+        Organization ID *
+      </label>
       <input
         id="orgId"
+        name="orgId"
         type="text"
         value={orgId}
         onChange={(e) => setOrgId(e.target.value)}
         placeholder="Enter Organization ID"
         required
+        aria-required="true"
         disabled={loading}
+        aria-invalid={Boolean(validationError && !orgId.trim())}
+        aria-describedby={
+          validationError && !orgId.trim()
+            ? "login-error"
+            : undefined
+        }
       />
 
-      <label htmlFor="email">Email</label>
+      <label htmlFor="email">
+        Email *
+      </label>
       <input
         id="email"
+        name="email"
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
+        autoComplete="username"
         required
+        aria-required="true"
         disabled={loading}
+        aria-invalid={Boolean(
+          validationError &&
+          (!email.trim() ||
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+        )}
+        aria-describedby={
+          validationError &&
+          (!email.trim() ||
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+            ? "login-error"
+            : undefined
+        }
       />
 
-      <label htmlFor="password">Password</label>
+      <label htmlFor="password">
+        Password *
+      </label>
       <input
         id="password"
+        name="password"
         type={showPassword ? "text" : "password"}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Enter your password"
+        autoComplete="current-password"
         required
+        aria-required="true"
         disabled={loading}
+        aria-invalid={Boolean(validationError && !password)}
+        aria-describedby={
+          validationError && !password
+            ? "login-error"
+            : undefined
+        }
       />
 
       <label className="show-password">
@@ -97,16 +143,23 @@ export default function LoginForm({
         Show Password
       </label>
 
-      {validationError && (
-        <p className="error-message">{validationError}</p>
-      )}
-
-      {error && (
-        <p className="error-message">{error}</p>
+      {displayedError && (
+        <p
+          id="login-error"
+          className="error-message"
+          role="alert"
+          aria-live="assertive"
+        >
+          {displayedError}
+        </p>
       )}
 
       <button type="submit" disabled={loading}>
-        {loading ? "Logging in..." : "Login"}
+        {loading ? (
+          <span role="status">Logging in, please wait...</span>
+        ) : (
+          "Login"
+        )}
       </button>
     </form>
   );

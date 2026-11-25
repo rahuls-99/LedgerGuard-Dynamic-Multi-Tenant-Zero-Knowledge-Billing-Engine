@@ -22,48 +22,58 @@ const AnalyticsPage = lazy(() => import("./pages/AnalyticsPage"));
 function App() {
   return (
     <BrowserRouter>
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
+
       <AuthProvider>
         <ErrorBoundary>
-          <Suspense
-            fallback={
-              <p className="loading-message">
-                Loading page...
-              </p>
-            }
-          >
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
+          <div id="main-content" tabIndex={-1}>
+            <Suspense
+              fallback={
+                <p
+                  className="loading-message"
+                  role="status"
+                  aria-live="polite"
+                >
+                  Loading page, please wait...
+                </p>
+              }
+            >
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
 
-              <Route path="/forbidden" element={<ForbiddenPage />} />
+                <Route path="/forbidden" element={<ForbiddenPage />} />
 
-              <Route element={<ProtectedRoute />}>
+                <Route element={<ProtectedRoute />}>
+                  <Route
+                    path="/dashboard"
+                    element={<DashboardPage />}
+                  />
+
+                  <Route
+                    path="/ledger"
+                    element={<LedgerPage />}
+                  />
+
+                  <Route
+                    path="/analytics"
+                    element={<AnalyticsPage />}
+                  />
+                </Route>
+
                 <Route
-                  path="/dashboard"
-                  element={<DashboardPage />}
+                  path="/"
+                  element={<Navigate to="/dashboard" replace />}
                 />
 
                 <Route
-                  path="/ledger"
-                  element={<LedgerPage />}
+                  path="*"
+                  element={<Navigate to="/dashboard" replace />}
                 />
-
-                <Route
-                  path="/analytics"
-                  element={<AnalyticsPage />}
-                />
-              </Route>
-
-              <Route
-                path="/"
-                element={<Navigate to="/dashboard" replace />}
-              />
-
-              <Route
-                path="*"
-                element={<Navigate to="/dashboard" replace />}
-              />
-            </Routes>
-          </Suspense>
+              </Routes>
+            </Suspense>
+          </div>
         </ErrorBoundary>
       </AuthProvider>
     </BrowserRouter>

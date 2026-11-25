@@ -91,25 +91,32 @@ export default function LedgerPage() {
         <h1>LedgerGuard</h1>
       </header>
 
-      <main className="dashboard-content">
+      <main
+        className="dashboard-content"
+        aria-busy={loading}
+      >
         <h2>Transaction Ledger</h2>
         <p>View and manage your transactions here.</p>
 
-        {loading && <p>Loading invoices...</p>}
+        {loading && (
+          <p role="status" aria-live="polite">
+            Loading invoices, please wait...
+          </p>
+        )}
 
         {error && (
-          <p role="alert">
+          <p className="error-message" role="alert">
             {error}
           </p>
         )}
 
         {invoices !== null && !loading && (
-          <div>
+          <section>
             <h3>Invoice Data</h3>
-            <pre>
+            <pre className="invoice-data">
               {JSON.stringify(invoices, null, 2)}
             </pre>
-          </div>
+          </section>
         )}
       </main>
     </div>
