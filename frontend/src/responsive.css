@@ -1,0 +1,71 @@
+/* LedgerGuard shared responsive breakpoints */
+
+:root {
+    --breakpoint-mobile: 480px;
+    --breakpoint-tablet: 768px;
+    --breakpoint-laptop: 1024px;
+    --breakpoint-desktop: 1280px;
+}
+
+/* Prevent unwanted horizontal scrolling */
+
+html,
+body,
+#root {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    margin: 0;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Responsive images and media */
+
+img,
+video,
+canvas {
+    max-width: 100%;
+}
+
+/* Long text should not break the layout */
+
+p,
+h1,
+h2,
+h3,
+span {
+    overflow-wrap: anywhere;
+}
+
+/* Mobile improvements */
+
+@media (max-width: 480px) {
+
+    button,
+    input,
+    select,
+    textarea {
+        min-height: 44px;
+        max-width: 100%;
+    }
+
+    .card {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+/* Tablet */
+
+@media (max-width: 768px) {
+    .responsive-grid {
+        grid-template-columns: 1fr;
+    }
+}

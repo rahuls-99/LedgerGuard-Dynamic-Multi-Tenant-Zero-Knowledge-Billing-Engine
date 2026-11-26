@@ -1,0 +1,36 @@
+.transaction-list {
+    width: 100%;
+    min-width: 0;
+}
+
+.transaction-list--mobile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md, 16px);
+}
+
+.transaction-list--desktop {
+    overflow-x: auto;
+}
+
+.transaction-list__table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+}
+
+.transaction-list__loading {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.transaction-list__loading .data-table {
+    width: 100%;
+    min-width: 650px;
+}
+
+@media (max-width: 360px) {
+    .transaction-list--mobile {
+        gap: var(--spacing-sm, 8px);
+    }
+}

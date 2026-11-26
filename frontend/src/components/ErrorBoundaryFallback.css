@@ -1,0 +1,58 @@
+.error-boundary-fallback {
+    width: 100%;
+    min-height: 220px;
+    padding: var(--spacing-xl) var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid var(--status-failed-bg);
+    border-radius: var(--radius-lg);
+    background: var(--status-failed-bg);
+}
+
+.error-boundary-fallback h2 {
+    color: var(--status-failed-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.error-boundary-fallback p {
+    color: var(--text-secondary);
+    overflow-wrap: anywhere;
+}
+
+.error-boundary-fallback__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.error-boundary-fallback button {
+    min-height: 44px;
+    padding: 10px var(--spacing-md);
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+}
+
+.error-boundary-fallback button:focus-visible {
+    outline: 3px solid var(--accent-border);
+    outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+    .error-boundary-fallback__actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .error-boundary-fallback button {
+        width: 100%;
+    }
+}

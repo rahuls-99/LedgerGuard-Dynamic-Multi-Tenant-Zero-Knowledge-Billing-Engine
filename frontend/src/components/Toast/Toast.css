@@ -1,0 +1,160 @@
+.toast-viewport {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(400px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-left: 5px solid;
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  pointer-events: auto;
+  animation: toast-enter 180ms ease-out;
+}
+
+.toast-success {
+  border-left-color: #16a34a;
+}
+
+.toast-error {
+  border-left-color: #dc2626;
+}
+
+.toast-rollback {
+  border-left-color: #d97706;
+}
+
+.toast-warning {
+  border-left-color: #ea580c;
+}
+
+.toast-info {
+  border-left-color: #2563eb;
+}
+
+.toast-icon {
+  flex-shrink: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.toast-success .toast-icon {
+  color: #16a34a;
+}
+
+.toast-error .toast-icon {
+  color: #dc2626;
+}
+
+.toast-rollback .toast-icon {
+  color: #d97706;
+}
+
+.toast-warning .toast-icon {
+  color: #ea580c;
+}
+
+.toast-info .toast-icon {
+  color: #2563eb;
+}
+
+.toast-content {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.toast-content strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text-h);
+}
+
+.toast-content p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.toast button {
+  cursor: pointer;
+  font: inherit;
+}
+
+.toast-close {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 22px;
+}
+
+.toast-copy-button,
+.toast-action-button {
+  display: inline-block;
+  margin-top: 8px;
+  margin-right: 8px;
+  padding: 5px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text-h);
+  font-size: 13px;
+}
+
+.toast button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.toast-live-region {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .toast-viewport {
+    top: 80px;
+    right: 12px;
+    bottom: auto;
+    left: 12px;
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}
