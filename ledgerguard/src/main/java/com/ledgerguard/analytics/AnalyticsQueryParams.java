@@ -12,6 +12,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.time.Clock;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
@@ -54,7 +55,7 @@ public class AnalyticsQueryParams {
             if (params == null) {
                 return true;
             }
-            LocalDate todayUtc = LocalDate.now(clock);
+            LocalDate todayUtc = clock.instant().atZone(ZoneOffset.UTC).toLocalDate();
             LocalDate parsedTo;
             if (params.getTo() == null || params.getTo().isBlank()) {
                 parsedTo = todayUtc;

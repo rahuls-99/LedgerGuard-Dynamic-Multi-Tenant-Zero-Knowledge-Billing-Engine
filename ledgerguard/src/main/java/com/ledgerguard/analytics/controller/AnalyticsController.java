@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.concurrent.TimeUnit;
@@ -48,7 +50,7 @@ public class AnalyticsController {
                 ? TenantContext.getTenantId()
                 : ((tenantHeader != null && !tenantHeader.isBlank()) ? tenantHeader.trim() : "default");
 
-        LocalDate todayUtc = LocalDate.now(ZoneOffset.UTC);
+        LocalDate todayUtc = LocalDate.ofInstant(Clock.systemUTC().instant(), ZoneOffset.UTC);
         LocalDate toDate = (params != null && params.getTo() != null && !params.getTo().isBlank())
                 ? LocalDate.parse(params.getTo())
                 : todayUtc;
