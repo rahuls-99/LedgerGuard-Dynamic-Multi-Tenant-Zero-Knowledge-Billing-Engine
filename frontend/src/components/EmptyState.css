@@ -1,0 +1,39 @@
+.empty-state__icon {
+    font-size: 42px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.empty-state h3 {
+    margin: 0 0 var(--spacing-sm);
+    font-size: var(--font-size-lg);
+    color: var(--text-h);
+}
+
+.empty-state p {
+    max-width: 420px;
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.empty-state__button {
+    min-height: 44px;
+    margin-top: var(--spacing-md);
+    padding: 10px var(--spacing-md);
+    border: none;
+    border-radius: var(--radius-md);
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.empty-state__button:hover {
+    opacity: 0.9;
+}
+
+.empty-state__button:focus-visible {
+    outline: 3px solid var(--accent-border);
+    outline-offset: 3px;
+}

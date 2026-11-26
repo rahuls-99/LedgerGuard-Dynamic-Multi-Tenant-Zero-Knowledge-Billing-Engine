@@ -1,0 +1,121 @@
+.status-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) 10px;
+    border-radius: 9999px;
+    font-family: var(--sans);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.status-badge--sm {
+    padding: 3px 7px;
+    font-size: var(--font-size-sm);
+}
+
+.status-badge--md {
+    padding: var(--spacing-xs) 10px;
+    font-size: var(--font-size-sm);
+}
+
+.status-badge__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 12px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.status-badge__label {
+    display: inline-block;
+}
+
+.status-badge--success {
+    background-color: var(--status-success-bg);
+    color: var(--status-success-text);
+}
+
+.status-badge--failed {
+    background-color: var(--status-failed-bg);
+    color: var(--status-failed-text);
+}
+
+.status-badge--pending {
+    background-color: var(--status-pending-bg);
+    color: var(--status-pending-text);
+    animation: pending-pulse 1.8s ease-in-out infinite;
+}
+
+.status-badge--rolled-back {
+    background-color: var(--status-rolled-back-bg);
+    color: var(--status-rolled-back-text);
+}
+
+.status-badge--unknown {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+.status-badge:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
+
+/* Tooltip */
+.status-badge__tooltip {
+    position: absolute;
+    z-index: 100;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: 240px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background-color: #1f2937;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    white-space: normal;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+}
+
+.status-badge:hover .status-badge__tooltip,
+.status-badge:focus-visible .status-badge__tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes pending-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .status-badge--pending {
+        animation: none;
+    }
+
+    .status-badge__tooltip {
+        transition: none;
+    }
+}

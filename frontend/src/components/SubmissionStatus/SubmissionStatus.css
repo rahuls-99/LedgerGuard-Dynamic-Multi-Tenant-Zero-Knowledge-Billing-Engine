@@ -1,0 +1,107 @@
+.submission-status {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--border-color, #d1d5db);
+    border-radius: 10px;
+    background: var(--surface, #ffffff);
+}
+
+.submission-status__content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+}
+
+.submission-status__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    color: #334155;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.submission-status__text {
+    flex: 1;
+    min-width: 0;
+}
+
+.submission-status__message {
+    margin: 4px 0 0;
+    color: var(--text-primary, #111827);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.submission-status__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-left: 44px;
+}
+
+.submission-status__actions button {
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid var(--border-color, #d1d5db);
+    border-radius: 8px;
+    background: var(--surface, #ffffff);
+    color: var(--text-primary, #111827);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.submission-status__actions button:hover {
+    background: #f1f5f9;
+}
+
+.submission-status__actions button:focus-visible {
+    outline: 2px solid var(--primary-color, #2563eb);
+    outline-offset: 2px;
+}
+
+.submission-status--submitting .submission-status__icon,
+.submission-status--retrying .submission-status__icon {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.submission-status--success .submission-status__icon {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.submission-status--failed .submission-status__icon {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.submission-status--unknown .submission-status__icon {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+@media (max-width: 360px) {
+    .submission-status {
+        padding: 12px;
+    }
+
+    .submission-status__actions {
+        padding-left: 0;
+    }
+
+    .submission-status__actions button {
+        flex: 1;
+    }
+}
