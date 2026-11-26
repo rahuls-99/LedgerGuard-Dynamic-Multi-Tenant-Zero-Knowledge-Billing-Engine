@@ -44,7 +44,7 @@ The complete original project report is required to populate every promised item
 
 | Backend | Crash recovery evidence | Week 2 | Partly verified | \[Crash evidence](evidence/) |
 
-| Frontend | UI state validation | Week 2 | Pending evidence from Soumili | Pending |
+| Frontend | UI state validation | Week 2 | Initial validation evidence received; additional states pending | docs/UI_STATE_MATRIX.md and four screenshots |
 
 | Documentation | Consolidated bug tracker | Week 2 / Day 14 | In progress | \[BUGS.md](BUGS.md) |
 
@@ -103,6 +103,30 @@ The following results are supported by the evidence currently available.
 - Production build: Passed
 
 
+
+**Soumili's additional UI validation results**
+
+Source: UI_STATE_MATRIX.md, supplied by Soumili on 26 November 2026.
+
+- Playwright: 5/5 tests passed.
+- Vitest: 90/90 tests passed across 12 test files.
+- TypeScript check: Passed.
+- Production build: Successful.
+- Vite modules transformed: 103.
+- Confirmed UI defects: None in the tested scope.
+
+Validated UI states include login, password visibility, empty-form validation, authenticated dashboard, user details, navigation and logout.
+
+Four supplementary screenshots were received and copied into `screenshots/week2/`:
+
+- 01-login-page.png
+- 02-password-visible.png
+- 03-dashboard-page.png
+- 04-logout-redirect.png
+
+The following remain unvalidated: real backend authentication, expired JWT, 403 access, full Ledger and Analytics interactions, responsive layouts and cross-browser testing.
+
+One successful Playwright run is reported. Results across three repeated runs remain pending.
 
 **Backend test results supplied**
 
@@ -233,6 +257,11 @@ Do not treat suggested work as an approved commitment until confirmed.
 | ISOLATION_AUDIT.md | Tenant isolation evidence |
 | evidence/ | Backend test and crash evidence |
 | screenshots/week2/INDEX.md | Screenshot register |
+| UI_STATE_MATRIX.md | Soumili's UI state validation report |
+| screenshots/week2/01-login-page.png | Login screenshot |
+| screenshots/week2/02-password-visible.png | Password visibility screenshot |
+| screenshots/week2/03-dashboard-page.png | Dashboard screenshot |
+| screenshots/week2/04-logout-redirect.png | Logout screenshot |
 | API_CONTRACT.md | API contract reference |
 | LEDGER_SCHEMA.md | Database schema |
 | LOCK_DESIGN.md | Lock design |

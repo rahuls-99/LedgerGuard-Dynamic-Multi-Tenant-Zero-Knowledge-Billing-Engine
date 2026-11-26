@@ -14,17 +14,17 @@
 
 
 
-\- Desktop viewport: 1440 x 900.
+- Desktop viewport: 1440 x 900.
 
-\- Mobile viewport: 390 x 844.
+- Mobile viewport: 390 x 844.
 
-\- Use the same seed data for comparable screenshots.
+- Use the same seed data for comparable screenshots.
 
-\- Keep the same browser theme throughout the screenshot pack.
+- Keep the same browser theme throughout the screenshot pack.
 
-\- Never expose real tokens, passwords, credentials or personal data.
+- Never expose real tokens, passwords, credentials or personal data.
 
-\- Naming convention: NN-area-description.png.
+- Naming convention: NN-area-description.png.
 
 
 
@@ -198,15 +198,30 @@ Viewport: 390 x 844.
 
 
 
+## 10. Supplementary UI Validation Evidence - Soumili
+
+The following screenshots were supplied from Soumili's isolated UI testing worktree and copied into this repository on 26 November 2026.
+
+See `../../UI_STATE_MATRIX.md` for the corresponding UI validation results.
+
+| Filename | Caption | Status |
+|---|---|---|
+| 01-login-page.png | Login page initial state | Received |
+| 02-password-visible.png | Password visibility state | Received |
+| 03-dashboard-page.png | Authenticated dashboard | Received |
+| 04-logout-redirect.png | Logout and login redirect | Received |
+
+These are supplementary team-provided evidence files. They are not automatically counted as completed items in the original 38-screenshot checklist. Map and verify each file against the original screenshot requirements before changing their statuses.
+
 ## Progress Summary
 
 
 
-\- Total planned screenshots: 38
+- Total planned screenshots: 38
 
-\- Captured: 0
+- Captured: 0
 
-\- Pending: 38
+- Pending: 38
 
 
 

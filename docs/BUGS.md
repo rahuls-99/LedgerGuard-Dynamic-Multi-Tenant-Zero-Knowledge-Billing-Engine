@@ -208,24 +208,54 @@ JaCoCo package coverage and five repeated concurrency-suite results have not yet
 
 ### Soumili - Frontend validation
 
+**Evidence:** docs/UI_STATE_MATRIX.md and docs/screenshots/week2/.
 
+**Validation results reported: 26 November 2026**
 
-Awaiting:
+| Test | Result |
+|---|---|
+| Playwright UI tests | 5/5 passed |
+| Vitest component tests | 90/90 passed |
+| Vitest test files | 12 passed |
+| Production build | Successful |
+| TypeScript check | Passed |
+| Vite modules transformed | 103 |
 
-\- docs/UI\_STATE\_MATRIX.md
+**UI states validated successfully:**
 
-\- UI validation failures
+- Login initial page.
+- Password hidden and visible states.
+- Empty login form validation.
+- Authenticated dashboard.
+- User ID, organization and role display.
+- Ledger and Analytics navigation links.
+- Logout and redirect to Login.
 
-\- Screenshots
+**Confirmed UI defects:** None identified in the tested scope.
 
-\- Playwright test results
+**Test setup corrections (not application defects):**
 
-\- Real-backend transaction-state results
+- JWT test fixture changed to expire one hour in the future.
+- Vitest configuration updated to exclude the Playwright e2e folder.
 
-\- Lost-response and rollback test findings
+**Screenshot evidence:**
 
+- 01-login-page.png
+- 02-password-visible.png
+- 03-dashboard-page.png
+- 04-logout-redirect.png
 
+**Not yet validated:**
 
+- Real backend login and authentication.
+- Expired JWT behaviour.
+- Forbidden / 403 access state.
+- Full Ledger interactions.
+- Full Analytics interactions.
+- Responsive mobile and tablet layouts.
+- Cross-browser testing.
+
+Backend transaction-state, lost-response and rollback findings still require separate evidence where applicable.
 ### Rahul - Backend validation
 
 
