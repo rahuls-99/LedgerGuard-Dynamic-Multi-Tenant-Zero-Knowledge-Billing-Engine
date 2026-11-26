@@ -1,17 +1,23 @@
-package com.ledgerguard.analytics.dto;
+package com.ledgerguard.dto;
 
 import java.util.List;
 
 public record SummaryResponse(
         String tenantId,
         String baseCurrency,
-        String from,
-        String to,
+        String granularity,
+        WindowRange currentWindow,
+        WindowRange previousWindow,
         PeriodSummary current,
         PeriodSummary previous,
-        ChangeSummary changes,
+        ChangeSummary change,
         UsageSummary usage
 ) {
+    public record WindowRange(
+            String from,
+            String to
+    ) {}
+
     public record PeriodSummary(
             long total,
             long success,
@@ -19,29 +25,28 @@ public record SummaryResponse(
             long rolledBack,
             long otherCurrencyCount,
             String successRate,
-            String amountCharged,
-            String amountToppedUp,
-            String amountRefunded
+            String charged,
+            String toppedUp,
+            String refunded
     ) {}
 
     public record ChangeSummary(
-            String totalPercent,
-            String successRatePercent,
-            String amountChargedPercent,
-            String totalCostPercent
+            String totalDeltaPct,
+            String chargedDeltaPct,
+            String successRateDeltaPct
     ) {}
 
     public record UsageSummary(
-            String totalCost,
-            String previousTotalCost,
-            List<ResourceUsageItem> byResource
+            String totalUsageAmount,
+            List<ResourceUsageItem> items
     ) {}
 
     public record ResourceUsageItem(
             String code,
             String name,
             String unit,
-            String quantity,
-            String cost
+            long totalQuantity,
+            String billedAmount,
+            String unbilledAmount
     ) {}
 }

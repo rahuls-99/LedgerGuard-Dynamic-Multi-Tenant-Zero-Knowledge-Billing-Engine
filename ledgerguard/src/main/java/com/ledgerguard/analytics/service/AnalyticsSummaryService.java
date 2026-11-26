@@ -1,10 +1,10 @@
 package com.ledgerguard.analytics.service;
 
-import com.ledgerguard.analytics.dto.SummaryResponse;
-import com.ledgerguard.analytics.dto.SummaryResponse.ChangeSummary;
-import com.ledgerguard.analytics.dto.SummaryResponse.PeriodSummary;
-import com.ledgerguard.analytics.dto.SummaryResponse.ResourceUsageItem;
-import com.ledgerguard.analytics.dto.SummaryResponse.UsageSummary;
+import com.ledgerguard.dto.SummaryResponse;
+import com.ledgerguard.dto.SummaryResponse.ChangeSummary;
+import com.ledgerguard.dto.SummaryResponse.PeriodSummary;
+import com.ledgerguard.dto.SummaryResponse.ResourceUsageItem;
+import com.ledgerguard.dto.SummaryResponse.UsageSummary;
 import com.ledgerguard.analytics.repo.TransactionAnalyticsRepository;
 import com.ledgerguard.analytics.repo.TransactionAnalyticsRepository.TransactionBucketRow;
 import com.ledgerguard.analytics.repo.UsageAnalyticsRepository;
@@ -120,52 +120,53 @@ public class AnalyticsSummaryService {
 
         BigDecimal unroundedTotalCost = BigDecimal.ZERO;
         BigDecimal unroundedPrevCost = BigDecimal.ZERO;
-
         List<ResourceUsageItem> activeResources = usageRows.stream()
                 .filter(r -> r.currentRows() > 0)
                 .sorted(Comparator
                         .comparing(UsageAggregateRow::currentAmount, Comparator.reverseOrder())
                         .thenComparing(UsageAggregateRow::code))
-                .map(r -> new ResourceUsageItem(
-                        r.code(),
-                        r.name(),
-                        r.unit(),
-                        r.currentQuantity().setScale(4, RoundingMode.HALF_UP).toPlainString(),
-                        r.currentAmount().setScale(2, RoundingMode.HALF_UP).toPlainString()
-                ))
+                .map(r -> {
+                    String currentAmtStr = r.currentAmount().setScale(2, RoundingMode.HALF_UP).toPlainString();
+                    return new ResourceUsageItem(
+                            r.code(),
+                            r.name(),
+                            r.unit(),
+                            r.currentQuantity().longValue(),
+                            currentAmtStr,
+                            "0.00"
+                    );
+                })
                 .toList();
-
         for (UsageAggregateRow r : usageRows) {
             if (r.currentRows() > 0) {
                 unroundedTotalCost = unroundedTotalCost.add(r.currentAmount());
             }
             unroundedPrevCost = unroundedPrevCost.add(r.previousAmount());
         }
-
         String totalCostStr = unroundedTotalCost.setScale(2, RoundingMode.HALF_UP).toPlainString();
-        String prevCostStr = unroundedPrevCost.setScale(2, RoundingMode.HALF_UP).toPlainString();
-
         BigDecimal curSuccessRate = new BigDecimal(PercentMath.successRate(curAcc.success, curAcc.total()));
         BigDecimal prevSuccessRate = new BigDecimal(PercentMath.successRate(prevAcc.success, prevAcc.total()));
-
         ChangeSummary changes = new ChangeSummary(
                 PercentMath.changePercent(curAcc.total(), prevAcc.total()),
-                PercentMath.changePercent(curSuccessRate, prevSuccessRate),
                 PercentMath.changePercent(curAcc.charged, prevAcc.charged),
-                PercentMath.changePercent(unroundedTotalCost, unroundedPrevCost)
+                PercentMath.changePercent(curSuccessRate, prevSuccessRate)
         );
-
         UsageSummary usageSummary = new UsageSummary(
                 totalCostStr,
-                prevCostStr,
                 activeResources
         );
-
         return new SummaryResponse(
                 tenantId,
                 normalizedBase,
-                window.fromInclusive().toString(),
-                window.toInclusive().toString(),
+                "day",
+                new SummaryResponse.WindowRange(
+                        window.fromInclusive().toString(),
+                        window.toInclusive().toString()
+                ),
+                new SummaryResponse.WindowRange(
+                        window.prevFromInclusive().toString(),
+                        window.prevToInclusive().toString()
+                ),
                 curAcc.toDto(normalizedBase),
                 prevAcc.toDto(normalizedBase),
                 changes,

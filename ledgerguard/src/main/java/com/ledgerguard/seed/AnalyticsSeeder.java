@@ -1,164 +1,129 @@
 package com.ledgerguard.seed;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.support.TransactionTemplate;
 
-import java.sql.Timestamp;
-import java.time.Clock;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
 
-@Slf4j
 @Component
-@Profile({"demo", "e2e", "dev"})
-public class AnalyticsSeeder implements ApplicationRunner {
+@Profile({"dev", "local"})
+public class AnalyticsSeeder implements CommandLineRunner {
 
-    private final SeedProfileGuard profileGuard;
-    private final Clock clock;
-    private final JdbcTemplate jdbcTemplate;
-    private final TransactionTemplate transactionTemplate;
+    private static final Logger log = LoggerFactory.getLogger(AnalyticsSeeder.class);
 
-    public AnalyticsSeeder(
-            SeedProfileGuard profileGuard,
-            Clock clock,
-            JdbcTemplate jdbcTemplate,
-            TransactionTemplate transactionTemplate
-    ) {
-        this.profileGuard = profileGuard;
-        this.clock = clock;
+    private final NamedParameterJdbcTemplate jdbcTemplate;
+
+    public AnalyticsSeeder(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.transactionTemplate = transactionTemplate;
     }
 
     @Override
-    public void run(ApplicationArguments args) {
-        boolean seedRequested = args.containsOption("seed-analytics");
-        profileGuard.assertSeedAllowed(seedRequested);
-        if (!seedRequested) {
-            return;
-        }
+    public void run(String... args) {
+        String tenantId = "tenant_demo";
+        LocalDate today = LocalDate.now();
+        LocalDate periodStart = today.withDayOfMonth(1);
+        LocalDate periodEnd = today;
 
-        List<String> tenants = parseTenants(args);
-        String scale = getSingleOption(args, "scale", "normal");
-        LocalDate today = args.containsOption("today")
-                ? LocalDate.parse(getSingleOption(args, "today", LocalDate.now(clock).toString()))
-                : LocalDate.now(clock);
+        seedInvoiceIfAbsent(tenantId, "INV-DEMO-001", periodStart, periodEnd, "INR",
+                new BigDecimal("4500.00"), new BigDecimal("810.00"), new BigDecimal("5310.00"), "ISSUED");
 
-        long startNs = System.nanoTime();
-        UsagePatternGenerator usageGen = new UsagePatternGenerator();
-        TransactionHistoryGenerator txGen = new TransactionHistoryGenerator();
+        seedUsageIfAbsent(tenantId, "API_CALLS", "API Calls", "req",
+                new BigDecimal("15000.0000"), new BigDecimal("0.1000"), new BigDecimal("1500.00"), today.minusDays(2));
+        seedUsageIfAbsent(tenantId, "STORAGE_GB", "Cloud Storage", "gb",
+                new BigDecimal("120.0000"), new BigDecimal("25.0000"), new BigDecimal("3000.00"), today.minusDays(1));
+        seedUsageIfAbsent(tenantId, "ZK_PROOFS", "ZK Proof Verifications", "proof",
+                new BigDecimal("400.0000"), new BigDecimal("2.0250"), new BigDecimal("810.00"), today);
 
-        for (String tenant : tenants) {
-            transactionTemplate.executeWithoutResult(status -> seedTenant(tenant, scale, today, usageGen, txGen));
-        }
-
-        double elapsedSec = (System.nanoTime() - startNs) / 1_000_000_000.0;
-        log.info("Analytics seeding completed for tenants={} scale={} today={} in {}s",
-                tenants, scale, today, String.format("%.2f", elapsedSec));
+        log.info("AnalyticsSeeder completed idempotent demo data check for tenant={}", tenantId);
     }
 
-    private void seedTenant(
-            String tenant,
-            String scale,
-            LocalDate today,
-            UsagePatternGenerator usageGen,
-            TransactionHistoryGenerator txGen
+    private void seedInvoiceIfAbsent(
+            String tenantId,
+            String invoiceNumber,
+            LocalDate start,
+            LocalDate end,
+            String currency,
+            BigDecimal subtotal,
+            BigDecimal tax,
+            BigDecimal total,
+            String status
     ) {
-        // Idempotent cleanup of prior seeded usage & TXN-SEED-* rows (never touches E2E/non-seed data)
-        jdbcTemplate.update("DELETE FROM ledger_entries WHERE transaction_id LIKE 'TXN-SEED-%'");
-        jdbcTemplate.update("DELETE FROM transactions WHERE id LIKE 'TXN-SEED-%'");
-        jdbcTemplate.update("DELETE FROM usage_daily");
-        jdbcTemplate.update("DELETE FROM usage_records");
-
-        if ("orgC".equalsIgnoreCase(tenant)) {
-            log.info("Tenant {} intentionally seeded with empty analytics data", tenant);
+        String checkSql = "SELECT COUNT(*) FROM billing_invoices WHERE invoice_number = :invoiceNumber";
+        Integer count = jdbcTemplate.queryForObject(
+                checkSql,
+                new MapSqlParameterSource("invoiceNumber", invoiceNumber),
+                Integer.class
+        );
+        if (count != null && count > 0) {
             return;
         }
 
-        boolean isOrgB = "orgB".equalsIgnoreCase(tenant);
-        double multiplier = isOrgB ? 0.25 : ("large".equalsIgnoreCase(scale) ? 12.0 : 1.0);
-        int txCount = isOrgB ? 400 : 1500;
-        String prefix = isOrgB ? "B" : "A";
-        List<String> wallets = List.of(
-                "W-" + prefix + "-ANALYTICS-1",
-                "W-" + prefix + "-ANALYTICS-2",
-                "W-" + prefix + "-ANALYTICS-3",
-                "W-" + prefix + "-ANALYTICS-4",
-                "W-" + prefix + "-ANALYTICS-5"
-        );
-
-        Random random = new Random(tenant.hashCode() ^ 31L);
-        List<UsagePatternGenerator.RawUsageRow> rawRows =
-                usageGen.generate180Days(today, multiplier, isOrgB, random);
-        List<UsagePatternGenerator.DailyRollupRow> dailyRows = usageGen.rollupDaily(rawRows);
-
-        jdbcTemplate.batchUpdate(
-                "INSERT INTO usage_records (resource_code, quantity, unit_price, amount, occurred_at, source) VALUES (?, ?, ?, ?, ?, ?)",
-                rawRows,
-                1000,
-                (ps, row) -> {
-                    ps.setString(1, row.resourceCode());
-                    ps.setBigDecimal(2, row.quantity());
-                    ps.setBigDecimal(3, row.unitPrice());
-                    ps.setBigDecimal(4, row.amount());
-                    ps.setTimestamp(5, Timestamp.from(row.occurredAt()));
-                    ps.setString(6, row.source());
-                }
-        );
-
-        jdbcTemplate.batchUpdate(
-                "INSERT INTO usage_daily (usage_date, resource_code, quantity, amount, record_count) VALUES (?, ?, ?, ?, ?)",
-                dailyRows,
-                500,
-                (ps, row) -> {
-                    ps.setDate(1, java.sql.Date.valueOf(row.usageDate()));
-                    ps.setString(2, row.resourceCode());
-                    ps.setBigDecimal(3, row.quantity());
-                    ps.setBigDecimal(4, row.amount());
-                    ps.setInt(5, row.recordCount());
-                }
-        );
-
-        TransactionHistoryGenerator.HistoryResult txResult =
-                txGen.generate90Days(prefix, today, txCount, wallets, random);
-
-        jdbcTemplate.batchUpdate(
-                "INSERT INTO transactions (id, wallet_id, type, status, amount, failure_reason, created_at, balance_after) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                txResult.transactions(),
-                500,
-                (ps, tx) -> {
-                    ps.setString(1, tx.transactionId());
-                    ps.setString(2, tx.walletId());
-                    ps.setString(3, tx.type());
-                    ps.setString(4, tx.status());
-                    ps.setBigDecimal(5, tx.amount());
-                    ps.setString(6, tx.failureReason());
-                    ps.setTimestamp(7, Timestamp.from(tx.createdAt()));
-                    ps.setBigDecimal(8, tx.balanceAfter());
-                }
-        );
+        String insertSql = """
+                INSERT INTO billing_invoices
+                    (invoice_number, tenant_id, billing_period_start, billing_period_end, currency,
+                     subtotal_amount, tax_amount, total_amount, status, issued_at)
+                VALUES
+                    (:invoiceNumber, :tenantId, :startDate, :endDate, :currency,
+                     :subtotal, :tax, :total, :status, CURRENT_TIMESTAMP)
+                """;
+        jdbcTemplate.update(insertSql, new MapSqlParameterSource()
+                .addValue("invoiceNumber", invoiceNumber)
+                .addValue("tenantId", tenantId)
+                .addValue("startDate", Date.valueOf(start))
+                .addValue("endDate", Date.valueOf(end))
+                .addValue("currency", currency)
+                .addValue("subtotal", subtotal)
+                .addValue("tax", tax)
+                .addValue("total", total)
+                .addValue("status", status));
     }
 
-    private List<String> parseTenants(ApplicationArguments args) {
-        List<String> values = args.getOptionValues("tenants");
-        if (values == null || values.isEmpty()) {
-            return List.of("orgA", "orgB");
+    private void seedUsageIfAbsent(
+            String tenantId,
+            String resourceCode,
+            String resourceName,
+            String unit,
+            BigDecimal quantity,
+            BigDecimal unitPrice,
+            BigDecimal amount,
+            LocalDate recordedDate
+    ) {
+        String checkSql = """
+                SELECT COUNT(*) FROM usage_records
+                WHERE tenant_id = :tenantId
+                  AND resource_code = :resourceCode
+                  AND recorded_date = :recordedDate
+                """;
+        Integer count = jdbcTemplate.queryForObject(checkSql, new MapSqlParameterSource()
+                .addValue("tenantId", tenantId)
+                .addValue("resourceCode", resourceCode)
+                .addValue("recordedDate", Date.valueOf(recordedDate)), Integer.class);
+
+        if (count != null && count > 0) {
+            return;
         }
-        return Arrays.stream(values.get(0).split(","))
-                .map(String::trim)
-                .filter(s -> !s.isEmpty())
-                .toList();
-    }
 
-    private String getSingleOption(ApplicationArguments args, String name, String fallback) {
-        List<String> values = args.getOptionValues(name);
-        return (values == null || values.isEmpty()) ? fallback : values.get(0);
+        String insertSql = """
+                INSERT INTO usage_records
+                    (tenant_id, resource_code, resource_name, unit, quantity, unit_price, amount, recorded_date)
+                VALUES
+                    (:tenantId, :resourceCode, :resourceName, :unit, :quantity, :unitPrice, :amount, :recordedDate)
+                """;
+        jdbcTemplate.update(insertSql, new MapSqlParameterSource()
+                .addValue("tenantId", tenantId)
+                .addValue("resourceCode", resourceCode)
+                .addValue("resourceName", resourceName)
+                .addValue("unit", unit)
+                .addValue("quantity", quantity)
+                .addValue("unitPrice", unitPrice)
+                .addValue("amount", amount)
+                .addValue("recordedDate", Date.valueOf(recordedDate)));
     }
 }

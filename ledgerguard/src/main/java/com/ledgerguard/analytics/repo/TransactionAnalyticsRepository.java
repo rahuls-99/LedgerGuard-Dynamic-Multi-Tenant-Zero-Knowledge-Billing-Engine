@@ -28,7 +28,7 @@ public class TransactionAnalyticsRepository {
                    currency,
                    COUNT(*) AS cnt,
                    SUM(amount) AS total_amount
-            FROM transactions
+            FROM billing_transactions
             WHERE created_at >= :prevFrom
               AND created_at < :toExclusive
               AND status IN ('SUCCESS', 'FAILED', 'ROLLED_BACK')
