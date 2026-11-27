@@ -1,92 +1,55 @@
 package com.ledgerguard.analytics.api;
-import com.ledgerguard.analytics.AnalyticsQueryParams;
-import com.ledgerguard.analytics.dto.UsageResponse;
-import com.ledgerguard.analytics.service.AnalyticsUsageService;
-import com.ledgerguard.analytics.service.AnalyticsUsageService.UnknownResourcesException;
-import com.ledgerguard.multitenancy.TenantContext;
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.Timer;
-import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import com.ledgerguard.analytics.dto.TrendResponse;
+import com.ledgerguard.analytics.service.AnalyticsTrendService;
 import org.springframework.http.CacheControl;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
-@RestController("usageAnalyticsController")
+
+@RestController("trendAnalyticsController")
 @RequestMapping("/api/analytics")
 public class AnalyticsController {
-    private static final Logger log = LoggerFactory.getLogger(AnalyticsController.class);
-    private static final long SLOW_QUERY_THRESHOLD_MS = 100L;
-    private final AnalyticsUsageService usageService;
-    private final MeterRegistry meterRegistry;
+
+    private final AnalyticsTrendService trendService;
     private final Clock utcClock;
-    public AnalyticsController(AnalyticsUsageService usageService,
-                               MeterRegistry meterRegistry,
-                               Clock utcClock) {
-        this.usageService = usageService;
-        this.meterRegistry = meterRegistry;
+
+    public AnalyticsController(AnalyticsTrendService trendService, Clock utcClock) {
+        this.trendService = trendService;
         this.utcClock = utcClock;
     }
-    @GetMapping("/usage")
-    public ResponseEntity<?> getUsage(
-            @Valid @ModelAttribute AnalyticsQueryParams params,
-            @RequestParam(required = false, defaultValue = "USD") String currency
-    ) {
-        String tenantId = TenantContext.getTenantId();
-        LocalDate todayUtc = utcClock.instant().atZone(ZoneOffset.UTC).toLocalDate();
-        LocalDate resolvedTo = (params.getTo() == null || params.getTo().isBlank())
-                ? todayUtc
-                : LocalDate.parse(params.getTo().trim());
-        LocalDate resolvedFrom = (params.getFrom() == null || params.getFrom().isBlank())
-                ? resolvedTo.minusDays(29)
-                : LocalDate.parse(params.getFrom().trim());
-        String resolvedGranularity = (params.getGranularity() == null || params.getGranularity().isBlank())
-                ? "day"
-                : params.getGranularity().trim();
-        long startNanos = System.nanoTime();
-        try {
-            UsageResponse payload = usageService.getUsage(
-                    resolvedFrom,
-                    resolvedTo,
-                    resolvedGranularity,
-                    currency,
-                    params.getResource()
-            );
-            long elapsedNanos = System.nanoTime() - startNanos;
-            Timer.builder("analytics.usage.query")
-                    .tag("tenant", tenantId != null ? tenantId : "unknown")
-                    .tag("granularity", resolvedGranularity)
-                    .register(meterRegistry)
-                    .record(elapsedNanos, TimeUnit.NANOSECONDS);
-            long elapsedMs = TimeUnit.NANOSECONDS.toMillis(elapsedNanos);
-            if (elapsedMs > SLOW_QUERY_THRESHOLD_MS) {
-                log.warn("Slow analytics usage query: tenant={} granularity={} elapsedMs={}",
-                        tenantId, resolvedGranularity, elapsedMs);
-            }
-            return ResponseEntity.ok()
-                    .cacheControl(CacheControl.noStore())
-                    .body(Map.of(
-                            "success", true,
-                            "data", payload
-                    ));
-        } catch (UnknownResourcesException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .cacheControl(CacheControl.noStore())
-                    .body(Map.of(
-                            "success", false,
-                            "code", "VALIDATION_ERROR",
-                            "errors", ex.getErrors()
-                    ));
-        }
+
+    @GetMapping("/transactions/trend")
+    public ResponseEntity<Map<String, Object>> getTransactionTrend(
+            @RequestParam(required = false) String from,
+            @RequestParam(required = false) String to,
+            @RequestParam(required = false) String granularity,
+            @RequestParam(required = false) String currency,
+            @RequestParam(name = "type", required = false) List<String> types,
+            @RequestHeader(name = "X-Base-Currency", required = false) String currencyHeader) {
+
+        LocalDate todayUtc = LocalDate.ofInstant(utcClock.instant(), ZoneOffset.UTC);
+        LocalDate parsedTo = (to == null || to.isBlank()) ? todayUtc : LocalDate.parse(to);
+        LocalDate parsedFrom = (from == null || from.isBlank()) ? parsedTo.minusDays(29) : LocalDate.parse(from);
+        String resolvedGranularity = (granularity == null || granularity.isBlank()) ? "day" : granularity;
+        String effectiveCurrency = (currency != null && !currency.isBlank())
+                ? currency
+                : ((currencyHeader != null && !currencyHeader.isBlank()) ? currencyHeader : "USD");
+
+        TrendResponse response = trendService.getTrend(
+                parsedFrom, parsedTo, resolvedGranularity, types, effectiveCurrency);
+
+        return ResponseEntity.ok()
+                .cacheControl(CacheControl.noStore())
+                .body(Map.of("success", true, "data", response));
     }
 }
