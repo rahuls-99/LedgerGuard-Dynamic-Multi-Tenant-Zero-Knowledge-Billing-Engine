@@ -28,7 +28,7 @@ Base URL: `http://localhost:8080`
 {
   "success": true,
   "token": "<signed_jwt>",
-  "principal": {
+  "user": {
     "userId": "u101",
     "orgId": "orgA",
     "role": "admin"
